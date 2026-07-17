@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d6b6e">
+    <title>ENT Master Question Bank</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Adam ENT">
+
+    <style>
+        :root {
+            --bg: #f0f4f5; --surface: #ffffff; --surface2: #e8f0f2;
+            --text: #1a2b2c; --text2: #4a5b5c;
+            --primary: #0d6b6e; --primary-light: #0f8a8e; --primary-dark: #094a4d;
+            --accent: #e8943a; --accent-light: #f5b870;
+            --success: #2d8a4e; --danger: #c0392b; --warning: #d4a017;
+            --border: #c8d6d8; --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --radius: 12px; --radius-sm: 8px; --transition: 0.2s ease;
+            --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --nav-height: 64px; --max-width: 900px; --card-gap: 14px;
+        }
+
+        .dark-mode {
+            --bg: #121a1b; --surface: #1a2628; --surface2: #1e2c2e;
+            --text: #e0e8e9; --text2: #a0b4b6;
+            --primary: #1a9a9e; --primary-light: #22b8bd; --primary-dark: #0d6b6e;
+            --accent: #f0a550; --accent-light: #f5c080;
+            --success: #3cb064; --danger: #e05545; --warning: #e6b830;
+            --border: #2a3a3c; --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; -webkit-tap-highlight-color: transparent; transition: background var(--transition), color var(--transition); padding-bottom: calc(var(--nav-height) + 20px); user-select: none; }
+
+        .app-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 16px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+        .header-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .logo { font-size: 1.3rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .btn-icon { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: all var(--transition); }
+        .btn-icon:active { transform: scale(0.93); background: var(--surface2); }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); display: flex; z-index: 100; box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06); height: var(--nav-height); }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer; color: var(--text2); font-size: 0.7rem; font-weight: 500; border: none; background: none; position: relative; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active::after { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 3px; background: var(--primary); border-radius: 0 0 3px 3px; }
+
+        .main-content { max-width: var(--max-width); margin: 0 auto; padding: 16px; animation: fadeIn 0.25s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-bottom: var(--card-gap); box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .card-header { font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .stat-card { background: var(--surface2); border-radius: var(--radius-sm); padding: 14px 12px; text-align: center; border: 1px solid var(--border); }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.75rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: var(--radius-sm); border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all var(--transition); font-family: var(--font); }
+        .btn:active { transform: scale(0.95); }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-sm { padding: 6px 12px; font-size: 0.78rem; border-radius: 6px; }
+        .btn-block { width: 100%; justify-content: center; }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-success { background: var(--success); color: #fff; }
+
+        input, select, textarea { width: 100%; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); font-family: var(--font); font-size: 0.9rem; background: var(--surface); color: var(--text); margin-bottom: 8px; }
+        label { font-weight: 600; font-size: 0.85rem; color: var(--text2); display: block; margin-bottom: 4px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+        .question-block { background: var(--surface); border-radius: var(--radius); padding: 20px; margin-bottom: 14px; border: 1px solid var(--border); }
+        .question-text { font-weight: 600; font-size: 1.05rem; margin-bottom: 14px; }
+        .option-btn { display: block; width: 100%; text-align: left; padding: 12px 16px; margin: 6px 0; border-radius: var(--radius-sm); border: 2px solid var(--border); background: var(--surface); cursor: pointer; font-size: 0.92rem; transition: all var(--transition); color: var(--text); }
+        .option-btn.selected { border-color: var(--primary); background: rgba(13, 107, 110, 0.08); font-weight: 600; }
+        .option-btn.correct { border-color: var(--success) !important; background: rgba(45, 138, 78, 0.12) !important; color: var(--success) !important; }
+        .option-btn.wrong { border-color: var(--danger) !important; background: rgba(192, 57, 43, 0.1) !important; color: var(--danger) !important; }
+        .explanation-box { margin-top: 12px; padding: 14px; background: var(--surface2); border-radius: var(--radius-sm); border-left: 4px solid var(--primary); font-size: 0.9rem; color: var(--text2); }
+        
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 14px; font-size: 0.7rem; font-weight: 600; }
+        .badge-primary { background: rgba(13, 107, 110, 0.12); color: var(--primary); }
+        .badge-accent { background: rgba(232, 147, 58, 0.12); color: var(--accent); }
+        .badge-success { background: rgba(45, 138, 78, 0.12); color: var(--success); }
+        .badge-danger { background: rgba(192, 57, 43, 0.1); color: var(--danger); }
+        .badge-group { background: rgba(108, 92, 231, 0.12); color: #6c5ce7; }
+        
+        .timer-display { font-size: 2rem; font-weight: 700; text-align: center; color: var(--primary); }
+        .timer-warning { color: var(--warning) !important; }
+        .timer-danger { color: var(--danger) !important; }
+        .progress-bar { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; margin: 8px 0; }
+        .progress-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.3s; }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 12px; }
+        .flex-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--text2); }
+        .highlight { background: rgba(232, 147, 58, 0.3); padding: 0 2px; border-radius: 2px; }
+        .modal-field { margin-bottom: 12px; }
+
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+    
+.book-chip{display:inline-block;padding:6px 10px;margin:4px;border-radius:16px;background:#0d6b6e;color:#fff;font-size:12px}
+.selection-panel{border:2px solid var(--primary);padding:10px;border-radius:12px;background:var(--surface2)}
+
+
+.book-card{padding:10px;border:1px solid var(--border);border-radius:10px;margin:6px 0;cursor:pointer}
+.book-card.active{background:rgba(13,107,110,.12);border-color:var(--primary)}
+
+
+.book-card,.subject-card{padding:10px;border:1px solid var(--border);border-radius:10px;margin:4px;cursor:pointer;display:inline-block}
+.book-card.selected,.subject-card.selected{background:var(--primary);color:white}
+.card-grid{display:flex;flex-wrap:wrap;gap:6px;max-height:250px;overflow:auto}
+
+
+.book-card{padding:10px;border:1px solid var(--border);border-radius:10px;margin:4px;cursor:pointer;display:inline-block}
+.book-card.selected{background:var(--primary);color:white}
+.card-grid{display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow:auto}
+</style>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="logo"><span>🦻</span> Adam ENT Master Bank</div>
+            <div>
+                <button class="btn-icon" id="btnDarkMode">🌓</button>
+                <button class="btn-icon" id="btnSearch">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content" id="mainContent"></main>
+
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item active" data-view="dashboard"><span>📊</span>Dashboard</button>
+        <button class="nav-item" data-view="study"><span>📖</span>Study</button>
+        <button class="nav-item" data-view="exam"><span>📝</span>Exam</button>
+        <button class="nav-item" data-view="questions"><span>📋</span>Questions</button>
+        <button class="nav-item" data-view="import"><span>📥</span>Import</button>
+    </nav>
+
+    <div id="modalOverlay" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;">
+        <div id="modalContent" style="background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:900px;max-height:85vh;overflow-y:auto;padding:20px;"></div>
+    </div>
+    <div id="toastContainer" style="position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:300;"></div>
+
+    <script>
+        // ============================================================
+        //  ENT CURRICULUM — subjects + chapters
+        // ============================================================
+        const ENT_DATA = {
+            'Rhinology': [
+                'Anatomy of the nose and paranasal sinuses', 'Outpatient assessment', 'Physiology of the nose and paranasal sinuses',
+                'Measurement of the nasal airway', 'Allergic rhinitis', 'Non‑allergic perennial rhinitis', 'Occupational rhinitis',
+                'Rhinosinusitis: Definitions, classification and diagnosis', 'Nasal polyposis', 'Fungal rhinosinusitis',
+                'Medical management for rhinosinusitis', 'Surgical management of rhinosinusitis', 'The frontal sinus',
+                'Mucoceles of the paranasal sinuses', 'Complications of rhinosinusitis', 'The relationship between the upper and lower respiratory tract',
+                'Nasal septum and nasal valve', 'Nasal septal perforations', 'Management of enlarged turbinates', 'Epistaxis',
+                'Nasal and facial fractures', 'CSF leaks', 'Granulomatous conditions of the nose', 'Abnormalities of smell',
+                'Disorders of the orbit', 'Diagnosis and management of facial pain', 'Juvenile angiofibroma',
+                'Endoscopic management of sinonasal tumours', 'Surgical management of pituitary and paraseptal diseases',
+                'Extended anterior skull base approaches', 'Imaging in rhinology', 'Acute infection in case of maxillary sinusitis'
+            ],
+            'Paediatric ENT': [
+                'Introduction to paediatric otorhinolaryngology', 'The paediatric consultation', 'Recognition and management of the sick child',
+                'Anaesthesia for paediatric otorhinolaryngology procedures', 'The child with special needs', 'The child with a syndrome',
+                'Management of the immunodeficient child', 'Hearing screening and surveillance', 'Hearing tests in children',
+                'Management of the hearing impaired child', 'Paediatric implantation otology', 'Congenital middle ear abnormalities',
+                'Otitis media with effusion', 'Acute otitis media', 'Chronic otitis media (paediatric)', 'Microtia and external ear abnormalities',
+                'Disorders of speech and language', 'Cleft lip and palate', 'Craniofacial surgery', 'Balance disorders in children',
+                'Facial paralysis in children', 'Neonatal nasal obstruction', 'Paediatric rhinosinusitis and its complications',
+                'Lacrimal disorders in children', 'The adenoid and adenoidectomy', 'Paediatric obstructive sleep apnoea', 'Stridor',
+                'Acute laryngeal infections (paediatric)', 'Congenital disorders of the larynx, trachea and bronchi',
+                'Acquired laryngotracheal stenosis (paediatric)', 'Juvenile‑onset recurrent respiratory papillomatosis',
+                'Paediatric voice disorders', 'Foreign bodies in the ear, nose and throat', 'Paediatric tracheostomy',
+                'Perinatal airway management', 'Cervicofacial infections', 'Diseases of tonsils, tonsillectomy and tonsillotomy',
+                'Salivary glands (paediatric)', 'Tumours of the head and neck in childhood', 'Cysts and sinuses of the head and neck',
+                'Haemangiomas and vascular malformations', 'Drooling and aspiration', 'Reflux and eosinophilic oesophagitis (paediatric)',
+                'Oesophageal disorders in children'
+            ],
+            'Otology': [
+                'Anatomy and embryology of the external and middle ear', 'Anatomy of the cochlea and vestibular system: relating ultrastructure to function',
+                'Physiology of hearing', 'Physiology of equilibrium', 'Perception of sounds at the auditory cortex', 'Psychoacoustic audiometry',
+                'Evoked measurement of auditory sensitivity', 'Prevention of hearing loss', 'Hearing aids',
+                'Beyond hearing aids: an overview of adult audiological rehabilitation', 'Age‑related sensorineural hearing impairment',
+                'Noise‑induced hearing loss and related conditions', 'Autosomal dominant non‑syndromic sensorineural hearing loss',
+                'Ototoxicity', 'Idiopathic sudden sensorineural hearing loss', 'Tinnitus and hyperacusis', 'Evaluation of balance',
+                'Meniere\'s disease', 'Benign paroxysmal positional vertigo', 'Superior semicircular canal dehiscence', 'Vestibular neuritis',
+                'Vestibular migraine', 'Vestibular rehabilitation', 'Auditory neuropathy spectrum disorder and retrocochlear disorders in adults and children',
+                'Understanding tinnitus: a psychological perspective', 'Auditory processing disorders across the age span',
+                'Neuropsychiatric aspects of vestibular disorders', 'Clinical examination of the ears and hearing', 'Furunculosis', 'Myringitis',
+                'Keratosis obturans, primary auditory canal cholesteatoma and benign necrotizing otitis externa', 'Acquired atresia of the external ear',
+                'Otitis externa and otomycosis', 'Perichondritis of the external ear', 'Exostosis of the external auditory canal',
+                'Osteoradionecrosis of the temporal bone', 'Acute otitis media and otitis media with effusion in adults', 'Myringoplasty',
+                'Ossiculoplasty', 'Eustachian tube dysfunction', 'Otoendoscopy', 'Tuberculosis of the temporal bone', 'Otosclerosis',
+                'Otological effects of Paget\'s disease', 'Ear trauma', 'Otalgia', 'Bone‑conduction hearing devices', 'Cochlear implants',
+                'Middle ear implants', 'Auditory brainstem implantation', 'Imaging of the temporal bone'
+            ],
+            'Skull Base': [
+                'Anatomy of the skull base and infratemporal fossa', 'Evaluation of the skull base patient', 'Vascular assessment and management',
+                'Natural history of vestibular schwannomas', 'Surgical management of vestibular schwannoma', 'Stereotactic radiosurgery',
+                'Neurofibromatosis 2', 'Non‑vestibular schwannoma tumours of the cerebellum‑pontine angle', 'Middle fossa surgery',
+                'Jugular foramen lesions and their management', 'Petrous apex lesions', 'Approaches to the nasopharynx and Eustachian tube',
+                'Tumours of the temporal bone', 'Clinical neuroanatomy', 'The facial nerve and its non‑neoplastic disorders',
+                'Tumours of the facial nerve', 'Osteitis of the temporal bone', 'Squamous cell carcinoma of the temporal bone',
+                'Complications of skull base surgery'
+            ],
+            'Laryngology & Voice': [
+                'Physiology of the salivary glands', 'Phonosurgery', 'Movement disorders of the larynx',
+                'Chronic laryngitis', 'Contemporary management of laryngotracheal trauma', 'Upper airway obstruction and tracheostomy',
+                'Physiology of sleep and sleep disorders', 'Obstructive sleep apnoea: Medical management (adult)',
+                'The surgical management of snoring and obstructive sleep apnoea', 'Laryngotracheal stenosis in adults', 'Reflux disease (adult)',
+                'Paralysis of the larynx', 'Outpatient laryngeal procedures', 'Anatomy of the larynx and tracheobronchial tree',
+                'Physiology of the larynx', 'Voice and speech production', 'Assessment and examination of the larynx', 'Evaluation of the voice',
+                'Structural disorders of the vocal cords', 'Functional disorders of the voice', 'The professional voice',
+                'Speech and language therapy for voice disorders', 'Acute infections of the larynx (general)'
+            ],
+            'Facial Plastic & Reconstructive': [
+                'Rhinoplasty following nasal trauma', 'Pre‑operative assessment for rhinoplasty', 'External rhinoplasty', 'Revision rhinoplasty',
+                'Aesthetic dorsal reduction rhinoplasty', 'Nasal reconstruction', 'Pinnaplasty', 'Blepharoplasty',
+                'Surgical rejuvenation of the ageing face', 'Non‑surgical rejuvenation of the ageing face'
+            ],
+            'Head & Neck Surgery': [
+                'History of reconstructive surgery', 'Grafts and local flaps in head and neck cancer', 'Pedicled flaps in head and neck reconstruction',
+                'Reconstructive microsurgery in head and neck surgery', 'Benign and malignant conditions of the skin', 'Facial reanimation surgery',
+                'Partial and total ear reconstruction', 'A combined prosthetic and surgical approach', 'Oral cavity tumours including lip reconstruction',
+                'Oropharyngeal tumours', 'Tumours of the larynx', 'Head and neck pathology', 'Applications of robotics in head and neck practice',
+                'Biologically targeted agents in head and neck cancers', 'Prosthetic management of surgically acquired oral and facial defects',
+                'Multidisciplinary team working', 'Nutritional considerations', 'Speech voice and swallow rehabilitation after chemoradiation',
+                'Surgical anatomy of the neck', 'Clinical examination of the neck', 'Imaging of the neck', 'Neck trauma', 'Benign neck disease',
+                'Neck space infections', 'Anatomy and embryology of the mouth and dentition', 'Benign oral and dental disease',
+                'Salivary gland anatomy', 'Imaging of the salivary glands', 'Non‑neoplastic salivary gland diseases', 'Pharyngitis',
+                'Cricopharyngeal dysphagia', 'Oesophageal diseases (adult)', 'Neurological disease of the pharynx',
+                'Rehabilitation of swallowing disorders', 'Chronic aspiration', 'Temporomandibular joint disorders'
+            ],
+            'Swallowing & Dysphagia': [
+                'Anatomy of the pharynx and oesophagus', 'Physiology of swallowing', 'Causes and assessment of dysphagia and aspiration',
+                'Functional investigations of the upper gastrointestinal tract'
+            ]
+        };
+
+        const ALL_SUBJECTS = Object.keys(ENT_DATA).sort();
+        const ALL_CHAPTERS = Object.values(ENT_DATA).flat().sort((a, b) => a.localeCompare(b));
+
+        // ============================================================
+        //  DATABASE
+        // ============================================================
+        const DB_NAME = 'ENTQuestionBank';
+        const DB_VERSION = 6;
+
+        class ENTDatabase {
+            constructor() { this.db = null; this.ready = this.init(); }
+            init() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(DB_NAME, DB_VERSION);
+                    request.onupgradeneeded = (e) => {
+                        const db = e.target.result;
+                        if (!db.objectStoreNames.contains('questions')) {
+                            const qStore = db.createObjectStore('questions', { keyPath: 'id', autoIncrement: true });
+                            qStore.createIndex('subject', 'subject', { unique: false });
+                            qStore.createIndex('chapter', 'chapter', { unique: false });
+                            qStore.createIndex('topic', 'topic', { unique: false });
+                            qStore.createIndex('group', 'group', { unique: false });
+                        }
+                        if (!db.objectStoreNames.contains('examHistory')) db.createObjectStore('examHistory', { keyPath: 'id', autoIncrement: true });
+                        if (!db.objectStoreNames.contains('bookmarks')) db.createObjectStore('bookmarks', { keyPath: 'questionId' });
+                        if (!db.objectStoreNames.contains('notes')) db.createObjectStore('notes', { keyPath: 'questionId' });
+                        if (!db.objectStoreNames.contains('settings')) db.createObjectStore('settings', { keyPath: 'key' }); if (!db.objectStoreNames.contains('performance')) db.createObjectStore('performance', { keyPath: 'id', autoIncrement: true }); if (!db.objectStoreNames.contains('highYield')) db.createObjectStore('highYield', { keyPath: 'questionId' });
+                    };
+                    request.onsuccess = (e) => {
+                        this.db = e.target.result;
+
+                        this.db.onversionchange = () => {
+                            this.db.close();
+                            alert('A newer version of ENT Master Bank is available. Please reload the page.');
+                        };
+
+                        resolve();
+                    };
+
+                    request.onblocked = () => {
+                        console.warn('IndexedDB upgrade blocked by another open tab.');
+                    };
+
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+            async ensureReady() { await this.ready; }
+            async addQuestion(q) {
+                await this.ensureReady();
+                return new Promise((resolve, reject) => {
+                    const tx = this.db.transaction('questions', 'readwrite');
+                    q.dateAdded = new Date().toISOString();
+                    q.tags = q.tags || [];
+                    if (!q.group) q.group = '';
+                    const req = tx.objectStore('questions').add(q);
+                    req.onsuccess = (e) => resolve(e.target.result);
+                    req.onerror = (e) => reject(e.target.error);
+                    tx.onerror = (e) => reject(tx.error || e.target.error);
+                });
+            }
+            async getAllQuestions() {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('questions', 'readonly').objectStore('questions').getAll().onsuccess = (e) => resolve(e.target.result);
+                });
+            }
+            async getQuestion(id) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('questions', 'readonly').objectStore('questions').get(id).onsuccess = (e) => resolve(e.target.result);
+                });
+            }
+            async deleteQuestion(id) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    const tx = this.db.transaction(['questions', 'bookmarks', 'notes'], 'readwrite');
+                    tx.objectStore('questions').delete(id);
+                    tx.objectStore('bookmarks').delete(id);
+                    tx.objectStore('notes').delete(id);
+                    tx.oncomplete = () => resolve();
+                });
+            }
+            async toggleBookmark(qid) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    const tx = this.db.transaction('bookmarks', 'readwrite');
+                    const store = tx.objectStore('bookmarks');
+                    const get = store.get(qid);
+                    get.onsuccess = () => {
+                        if (get.result) { store.delete(qid); resolve(false); } 
+                        else { store.add({ questionId: qid }); resolve(true); }
+                    };
+                });
+            }
+            async isBookmarked(qid) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('bookmarks', 'readonly').objectStore('bookmarks').get(qid).onsuccess = (e) => resolve(!!e.target.result);
+                });
+            }
+            async getAllBookmarkedIds() {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('bookmarks', 'readonly').objectStore('bookmarks').getAll().onsuccess = (e) => resolve(e.target.result.map(b => b.questionId));
+                });
+            }
+            async saveExamResult(result) {
+                try {
+                    await this.ensureReady();
+                    return new Promise((resolve, reject) => {
+                        result.date = new Date().toISOString();
+                        const tx = this.db.transaction('examHistory', 'readwrite');
+                        tx.objectStore('examHistory').add(result).onsuccess = (e) => resolve(e.target.result);
+                        tx.onerror = (e) => resolve(null); // safely fail
+                    });
+                } catch(e) { console.error("Error saving exam result", e); }
+            }
+            async getExamHistory() {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('examHistory', 'readonly').objectStore('examHistory').getAll().onsuccess = (e) => resolve(e.target.result.reverse());
+                });
+            }
+            async getSetting(key, def = null) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    const tx = this.db.transaction('settings', 'readonly');
+                    tx.objectStore('settings').get(key).onsuccess = (e) => resolve(e.target.result ? e.target.result.value : def);
+                });
+            }
+            async setSetting(key, value) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('settings', 'readwrite').objectStore('settings').put({ key, value });
+                    resolve();
+                });
+            }
+
+            // AUTO-CATEGORIZATION ENABLED BULK IMPORT
+            async bulkImport(questions, groupName = '') {
+                await this.ensureReady();
+                const existingQuestions = await this.getAllQuestions();
+                const existingSet = new Set(
+                    existingQuestions.map(e => ((e.questionText||'').replace(/\s+/g,' ').replace(/[^a-z0-9 ]/gi,'').trim().toLowerCase()))
+                );
+                return new Promise((resolve, reject) => {
+                    const tx = this.db.transaction('questions', 'readwrite');
+                    const store = tx.objectStore('questions');
+                    let count = 0;
+                    
+                    const allSubjects = Object.keys(ENT_DATA);
+                    const allChapters = Object.values(ENT_DATA).flat();
+                    const stopWords = ['and', 'of', 'the', 'in', 'to', 'for', 'with', 'on', 'at', 'by', 'from', 'an', 'a', 'management', 'assessment', 'disorders', 'conditions', 'disease', 'surgery', 'anatomy', 'physiology', 'acute', 'chronic', 'clinical'];
+
+for (const q of questions) {
+                        q.dateAdded = q.dateAdded || new Date().toISOString();
+                        q.tags = q.tags || [];
+                        if (groupName && !q.group) q.group = groupName;
+                        if (!q.group) q.group = '';
+
+                        // Combine all text fields to search for matching keywords
+                        const textToSearch = [
+                            q.questionText || '', 
+                            q.optionA || '', q.optionB || '', q.optionC || '', 
+                            q.optionD || '', q.optionE || '', q.explanation || ''
+                        ].join(' ').toLowerCase();
+
+                        let bestSubject = 'Uncategorized';
+                        let bestChapter = 'General';
+                        let highestScore = 0;
+
+                        for (const [subject, chapters] of Object.entries(ENT_DATA)) {
+                            for (const chapter of chapters) {
+                                let score = 0;
+                                const chapLower = chapter.toLowerCase();
+                                const subjLower = subject.toLowerCase();
+
+                                // Exact chapter phrase match (highest weight)
+                                if (textToSearch.includes(chapLower)) score += 15;
+                                
+                                // Exact subject phrase match (medium weight)
+                                if (textToSearch.includes(subjLower)) score += 5;
+
+                                // Keyword match (lower weight)
+                                const keywords = chapLower.split(/[\s,:-]+/)
+                                    .map(w => w.trim().replace(/[^a-z0-9]/g, ''))
+                                    .filter(w => w.length > 3 && !stopWords.includes(w));
+
+                                for (const word of keywords) {
+                                    if (textToSearch.includes(word)) score += 2;
+                                }
+
+                                if (score > highestScore) {
+                                    highestScore = score;
+                                    bestSubject = subject;
+                                    bestChapter = chapter;
+                                }
+                            }
+                        }
+
+                        // Apply the best match if the question doesn't already have a valid category
+                        if (!q.subject || !allSubjects.includes(q.subject) || q.subject === 'Uncategorized') {
+                            q.subject = highestScore > 0 ? bestSubject : 'Uncategorized';
+                        }
+                        if (!q.chapter || !allChapters.includes(q.chapter) || q.chapter === 'General') {
+                            q.chapter = highestScore > 0 ? bestChapter : 'General';
+                        }
+
+                        const normalizedNew = (q.questionText||'').replace(/\s+/g,' ').replace(/[^a-z0-9 ]/gi,'').trim().toLowerCase();
+let duplicate = false;
+try{
+duplicate = existingSet.has(normalizedNew);
+if(!duplicate){
+existingSet.add(normalizedNew);
+store.add(q);
+count++;
+}
+}catch(err){
+store.add(q);
+count++;
+}
+                    }
+                    
+                    tx.oncomplete = () => resolve(count);
+                    tx.onerror = () => reject(tx.error);
+                });
+            }
+
+            async deleteQuestionsByGroup(groupName) {
+                await this.ensureReady();
+                const questions = await this.getAllQuestions();
+                const targets = questions.filter(q => (q.group||'') === groupName);
+                for (const q of targets) {
+                    await this.deleteQuestion(q.id);
+                }
+                return targets.length;
+            }
+
+            async clearAllQuestions() {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    const tx = this.db.transaction(['questions', 'bookmarks', 'notes', 'examHistory','performance','highYield'], 'readwrite');
+                    tx.objectStore('questions').clear();
+                    tx.objectStore('bookmarks').clear();
+                    tx.objectStore('notes').clear();
+                    tx.objectStore('examHistory').clear(); tx.objectStore('performance').clear(); tx.objectStore('highYield').clear();
+                    tx.oncomplete = () => resolve();
+                });
+            }
+            async exportAllData() {
+                const questions = await this.getAllQuestions();
+                const examHistory = await this.getExamHistory();
+                const bookmarks = await this.getAllBookmarkedIds();
+                const notes = await new Promise(resolve => {
+                    this.db.transaction('notes', 'readonly').objectStore('notes').getAll().onsuccess = (e) => resolve(e.target.result);
+                });
+                return { version: DB_VERSION, exportedAt: new Date().toISOString(), questions, examHistory, bookmarks, notes };
+            }
+            async clearAndRestore(data) {
+                await new Promise(resolve => {
+                    const tx = this.db.transaction(['questions', 'examHistory', 'bookmarks', 'notes', 'performance', 'highYield'], 'readwrite');
+                    tx.objectStore('questions').clear();
+                    tx.objectStore('examHistory').clear(); tx.objectStore('performance').clear(); tx.objectStore('highYield').clear();
+                    tx.objectStore('bookmarks').clear();
+                    tx.objectStore('notes').clear();
+                    tx.oncomplete = resolve;
+                });
+                if (data.questions) await this.bulkImport(data.questions);
+                for (const h of data.examHistory || []) await new Promise(resolve => {
+                    const tx = this.db.transaction('examHistory', 'readwrite');
+                    tx.objectStore('examHistory').add(h);
+                    tx.oncomplete = resolve;
+                });
+                for (const bid of data.bookmarks || []) await new Promise(resolve => {
+                    const tx = this.db.transaction('bookmarks', 'readwrite');
+                    tx.objectStore('bookmarks').put({ questionId: bid });
+                    tx.oncomplete = resolve;
+                });
+            }
+            async getAllGroups() {
+                const qs = await this.getAllQuestions();
+                const groups = new Set();
+                qs.forEach(q => { if (q.group) groups.add(q.group); });
+                return [...groups].sort();
+            }
+
+            async recordPerformance(r) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    const tx = this.db.transaction('performance','readwrite');
+                    tx.objectStore('performance').add(r);
+                    tx.oncomplete = () => resolve();
+                });
+            }
+
+            async getPerformance() {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('performance','readonly')
+                        .objectStore('performance')
+                        .getAll().onsuccess = e => resolve(e.target.result || []);
+                });
+            }
+
+
+            async toggleHighYield(qid) {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    const store = this.db.transaction('highYield','readwrite').objectStore('highYield');
+                    const req = store.get(qid);
+                    req.onsuccess = () => {
+                        if(req.result){ store.delete(qid); resolve(false); }
+                        else { store.put({questionId: qid, dateAdded:new Date().toISOString()}); resolve(true); }
+                    };
+                });
+            }
+
+            async getAllHighYieldIds() {
+                await this.ensureReady();
+                return new Promise(resolve => {
+                    this.db.transaction('highYield','readonly').objectStore('highYield')
+                    .getAll().onsuccess = e => resolve((e.target.result||[]).map(x=>x.questionId));
+                });
+            }
+        }
+
+const db = new ENTDatabase();
+
+// ============================================================
+        //  APP STATE
+        // ============================================================
+        const AppState = {
+            currentView: 'dashboard', darkMode: false,
+            examInProgress: false, examShowResults: false,
+            examQuestions: [], examAnswers: {}, examTimer: null,
+            examTimeRemaining: 0, examStartTime: null,
+            studyFilter: { subject: 'all', chapter: 'all', topic: 'all', group: 'all', mode: 'practice' },
+            questionFilters: { subject:'all', chapter:'all', topic:'all', difficulty:'all' },
+            searchQuery: '', lastExamResults: null,
+            studyQuestions: null, studyIndex: 0, studyAnswers: {}, studyRevealed: {}, _examSaved:false,
+        };
+
+        // ============================================================
+        //  DOM HELPERS
+        // ============================================================
+        function $(sel) { return document.querySelector(sel); }
+        function $$(sel) { return document.querySelectorAll(sel); }
+
+        function escapeHTML(str) { 
+            if (str == null) return '';
+            const d = document.createElement('div');
+            d.textContent = str; 
+            return d.innerHTML; 
+        }
+
+        function highlightText(text, query) {
+            if (!query || !text) return escapeHTML(text);
+            return escapeHTML(text).replace(new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<span class="highlight">$1</span>');
+        }
+
+        function formatTime(sec) { 
+            const m = Math.floor(sec / 60), s = sec % 60; 
+            return `${m}:${s.toString().padStart(2,'0')}`; 
+        }
+
+        function showToast(msg, type = 'info') {
+            const container = $('#toastContainer');
+            const toast = document.createElement('div');
+            toast.textContent = msg;
+            const bg = type === 'success' ? '#2d8a4e' : type === 'error' ? '#c0392b' : type === 'warning' ? '#d4a017' : '#333';
+            toast.style.cssText = `background:${bg};color:#fff;padding:10px 20px;border-radius:20px;margin-bottom:8px;font-weight:600;animation:toastIn 0.3s ease, toastOut 0.3s ease 2.2s forwards;`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 2600);
+        }
+
+        function closeModal() { $('#modalOverlay').classList.add('hidden'); }
+
+        // ============================================================
+        //  NAVIGATION
+        // ============================================================
+        function navigateTo(view) {
+            AppState.currentView = view;
+            if (AppState.examTimer) { clearInterval(AppState.examTimer); AppState.examTimer = null; }
+            AppState.examInProgress = false;
+            AppState.examShowResults = false;
+            $$('.nav-item').forEach(n => n.classList.remove('active'));
+            const nav = $(`.nav-item[data-view="${view}"]`);
+            if (nav) nav.classList.add('active');
+            renderViewSafely(view);
+        }
+
+        // ============================================================
+        //  RENDER ENGINE
+        // ============================================================
+        async function renderViewSafely(view) {
+            const main = $('#mainContent');
+            if (!main) return;
+            try {
+                switch (view) {
+                    case 'dashboard': main.innerHTML = await renderDashboard(); break;
+                    case 'study': main.innerHTML = await renderStudy(); break;
+                    case 'exam':
+                        if (AppState.examInProgress) main.innerHTML = await renderExamInProgress();
+                        else if (AppState.examShowResults) main.innerHTML = renderExamResults();
+                        else if (AppState.examInProgress) main.innerHTML = await renderExamInProgress();
+                        else main.innerHTML = await renderExamSetup();
+                        break;
+                    case 'questions': main.innerHTML = await renderQuestionList(); break;
+                    case 'import': main.innerHTML = renderImportExport(); break;
+                    case 'mistakes': main.innerHTML = await renderMistakes(); break;
+                    case 'highyield': main.innerHTML = await renderHighYield(); break;
+                    default: main.innerHTML = '<div class="card">Unknown view</div>';
+                }
+            } catch (e) {
+                console.error('Render error:', e);
+                main.innerHTML = `<div class="card text-center"><p style="color:var(--danger);">Error: ${escapeHTML(e.message)}</p></div>`;
+            }
+            attachEventListeners();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        //  RENDER FUNCTIONS
+        // ============================================================
+        async function renderDashboard() {
+            const questions = await db.getAllQuestions();
+            const total = questions.length;
+            const bookmarks = await db.getAllBookmarkedIds();
+            const history = await db.getExamHistory();
+            const perf = await db.getPerformance();
+ const correct=perf.filter(x=>x.correct).length; const wrong=perf.length-correct; const acc=perf.length?Math.round(correct*100/perf.length):0;
+            const avg = history.length ? Math.round(history.reduce((s, e) => s + (e.percentage || 0), 0) / history.length) : 0;
+            const subjectCounts = {};
+            questions.forEach(q => { const s = q.subject || 'Uncategorized'; subjectCounts[s] = (subjectCounts[s] || 0) + 1; });
+            const subjectEntries = Object.entries(subjectCounts).sort((a, b) => b[1] - a[1]);
+            return `
+            <div class="card"><div class="card-header">📊 Dashboard</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;">
+                <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Questions</div></div>
+                <div class="stat-card"><div class="stat-value">${bookmarks.length}</div><div class="stat-label">Bookmarked</div></div>
+                <div class="stat-card"><div class="stat-value">${history.length}</div><div class="stat-label">Exams</div></div><div class="stat-card"><div class="stat-value">${correct}</div><div class="stat-label">Correct</div></div><div class="stat-card"><div class="stat-value">${wrong}</div><div class="stat-label">Wrong</div></div><div class="stat-card"><div class="stat-value">${acc}%</div><div class="stat-label">Accuracy</div></div>
+                <div class="stat-card"><div class="stat-value">${avg}%</div><div class="stat-label">Avg Accuracy</div></div>
+              </div>
+            </div>
+            <div class="card"><div class="card-header">📚 By Subject</div>
+              ${subjectEntries.length ? subjectEntries.map(([s,c])=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);"><span>${escapeHTML(s)}</span><span class="badge badge-primary">${c}</span></div>`).join('') : '<div class="empty-state">No questions yet.</div>'}
+            </div>
+            <div class="card"><div class="card-header">🎯 Weak Topics</div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:8px">Advanced Subject → Chapter → Topic Analysis with Accuracy Tracking</div>
+${(() => {
+const m={};
+perf.forEach(x=>{
+ const key=`${x.subject||'Unknown'} → ${x.chapter||'Unknown'} → ${x.topic||'Unknown'}`;
+ if(!m[key]) m[key]={t:0,c:0};
+ m[key].t++;
+ if(x.correct) m[key].c++;
+});
+const arr=Object.entries(m)
+ .filter(([k,v])=>v.t>=2)
+ .map(([k,v])=>({k,p:Math.round(v.c*100/v.t),t:v.t}))
+ .sort((a,b)=>a.p-b.p)
+ .slice(0,5);
+return arr.length
+ ? arr.map(x=>`<div style="display:flex;justify-content:space-between;padding:6px 0"><span>${x.k}</span><span class="badge badge-danger">${x.p}%</span></div>`).join("")
+ : `<div class="empty-state">Solve more questions to generate weak-topic analytics.</div>`;
+})()}
+</div>
+
+<div class="card">
+<div class="card-header">❌ Missed Questions Bank</div>
+<div style="font-size:13px">Review your incorrect answers in one place.</div>
+<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+<span class="badge badge-danger">${wrong} Missed</span>
+<button class="btn btn-sm btn-danger" data-nav="mistakes">Review Mistakes</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header">⭐ High Yield Questions</div>
+
+
+<div style="font-size:13px">Mark important board and exam questions.</div>
+<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+<span class="badge badge-warning" id="hyBadge">${(await db.getAllHighYieldIds()).length} High Yield</span>
+<button class="btn btn-sm btn-accent" data-nav="highyield">Review High Yield</button>
+</div>
+</div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+<button class="btn btn-primary btn-sm" data-nav="study">📖 Study</button><button class='btn btn-success btn-sm' id='btnAdaptiveStudy'>🧠 Adaptive Study</button><button class='btn btn-accent btn-sm' onclick='startAdaptiveExam()'>🎯 Adaptive Exam</button>
+<button class="btn btn-accent btn-sm" data-nav="exam">📝 Exam</button>
+<button class="btn btn-danger btn-sm" id="btnClearAllDashboard">🗑 Clear All</button><button class="btn btn-outline btn-sm" id="btnScanDuplicates">🔍 Scan Duplicates</button>
+
+<div class="card">
+<div class="card-header">📈 Subject Performance Analytics</div>
+<div id="subjectAnalyticsContainer">
+<small>Accuracy by Subject will be calculated automatically from performance history.</small>
+</div>
+</div>
+
+</div>`;
+        }
+
+        async function renderStudy() {
+            const questions = await db.getAllQuestions();
+            const groups = await db.getAllGroups();
+            const sf = AppState.studyFilter;
+            let filtered = questions;
+            if (sf.subject !== 'all') filtered = filtered.filter(q => (q.subject || 'Uncategorized') === sf.subject);
+            if (sf.chapter !== 'all') filtered = filtered.filter(q => (q.chapter || 'General') === sf.chapter);
+            if (sf.topic !== 'all') filtered = filtered.filter(q => (q.topic || 'General') === sf.topic);
+            if (sf.group !== 'all') filtered = filtered.filter(q => (q.group || '') === sf.group);
+            if (sf.mode === 'bookmarked') { const bIds = await db.getAllBookmarkedIds(); filtered = filtered.filter(q => bIds.includes(q.id)); }
+             if (sf.mode === 'highyield') { const hyIds = await db.getAllHighYieldIds(); filtered = filtered.filter(q => hyIds.includes(q.id)); }
+
+            const subjectOpts = ['<option value="all">All</option>'] + ALL_SUBJECTS.map(s => `<option value="${escapeHTML(s)}" ${sf.subject===s?'selected':''}>${escapeHTML(s)}</option>`).join('');
+            let chapterList = ALL_CHAPTERS;
+            if (sf.subject !== 'all' && ENT_DATA[sf.subject]) chapterList = ENT_DATA[sf.subject];
+            const chapterOpts = ['<option value="all">All</option>'] + chapterList.map(c => `<option value="${escapeHTML(c)}" ${sf.chapter===c?'selected':''}>${escapeHTML(c)}</option>`).join('');
+            
+            const topicSet = new Set();
+            filtered.forEach(q => { if (q.topic) topicSet.add(q.topic); });
+            const topicOpts = ['<option value="all">All</option>'] + [...topicSet].sort().map(t => `<option value="${escapeHTML(t)}" ${sf.topic===t?'selected':''}>${escapeHTML(t)}</option>`).join('');
+            const groupOpts = ['<option value="all">All</option>'] + groups.map(g => `<option value="${escapeHTML(g)}" ${sf.group===g?'selected':''}>${escapeHTML(g)}</option>`).join('');
+
+            return `
+            <div class="card">
+              <div class="card-header">📖 Study Mode</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+                <button class="btn btn-sm ${sf.mode==='practice'?'btn-primary':'btn-outline'}" data-study-mode="practice">Practice</button>
+                <button class="btn btn-sm ${sf.mode==='bookmarked'?'btn-primary':'btn-outline'}" data-study-mode="bookmarked">⭐ Bookmarked</button><button class="btn btn-sm ${sf.mode==='highyield'?'btn-primary':'btn-outline'}" data-study-mode="highyield">🔥 High Yield</button>
+              </div>
+              <div class="form-row">
+                <div><label>Subject</label><select id="studySubject">${subjectOpts}</select></div>
+                <div><label>Chapter</label><select id="studyChapter">${chapterOpts}</select></div>
+                <div><label>Topic</label><select id="studyTopic">${topicOpts}</select></div>
+                <div><label>Group</label><select id="studyGroup">${groupOpts}</select></div>
+              </div>
+              <p style="font-size:0.85rem;color:var(--text2);">${filtered.length} questions match</p>
+              <button class="btn btn-primary btn-block" id="btnStartStudy">▶️ Start Studying</button>
+            </div>
+            <div id="studyArea"></div>`;
+        }
+
+                
+async function renderExamSetup() {
+    const groups = await db.getAllGroups();
+    return `
+    <div class="card">
+      <div class="card-header">📝 Exam Setup</div>
+
+      <label>📂 Books (Multiple Selection)</label>
+      <div class="card-grid">
+        ${groups.map(g=>`<div class="book-card selected" data-book="${escapeHTML(g)}">${escapeHTML(g)}</div>`).join('')}
+      </div>
+
+      <label style="margin-top:12px">📚 Subjects (Multiple Selection)</label>
+      <div class="card-grid">
+        ${ALL_SUBJECTS.map(s=>`<div class="subject-card" data-subject="${escapeHTML(s)}">${escapeHTML(s)}</div>`).join('')}
+      </div>
+
+      <label style="margin-top:12px">📖 Chapters (Multiple Selection)</label>
+      <div class="card-grid" id="chapterMultiContainer">
+        ${ALL_CHAPTERS.map(c=>`<div class="subject-card" data-chapter="${escapeHTML(c)}">${escapeHTML(c)}</div>`).join('')}
+      </div>
+
+      <div class="form-row" style="margin-top:15px">
+        <div><label>Questions</label><select id="examCount"><option>10</option><option selected>20</option><option>30</option><option>50</option><option value="9999">All Available</option></select></div>
+        <div><label>Timer (min)</label><select id="examTimerMinutes"><option value="0">None</option><option value="15">15</option><option value="30" selected>30</option><option value="60">60</option></select></div>
+        <div><label>Difficulty</label><select id="examDifficulty"><option value="all">All</option><option>Easy</option><option>Medium</option><option>Hard</option></select></div>
+      </div>
+
+      <button class="btn btn-accent btn-block mt-2" id="btnStartExam">🚀 Start Exam</button>
+    </div>`;
+}
+
+
+async function renderExamInProgress() {
+            const idx = AppState.examAnswers.currentIndex || 0;
+            const total = AppState.examQuestions.length;
+            const q = AppState.examQuestions[idx];
+            if (!q) { AppState.examInProgress = false; return renderExamResults(); }
+            const sel = AppState.examAnswers[q.id] || '';
+            const timerHtml = AppState.examTimeRemaining > 0 ? `<div class="timer-display" id="examTimerDisplay">${formatTime(AppState.examTimeRemaining)}</div>` : '';
+            const bmIds=await db.getAllBookmarkedIds();
+            const bmCount=bmIds.length;
+            const isBm=bmIds.includes(q.id);
+            return `
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;"><span class="badge badge-primary">Q ${idx+1}/${total}</span><span class="badge badge-accent">⭐ ${bmCount}</span>${timerHtml}</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:${((idx+1)/total)*100}%"></div></div>
+            </div>
+            <div class="question-block">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;"><div class="question-text" style="flex:1;">${idx+1}. ${escapeHTML(q.questionText)}</div><button class="btn btn-sm btn-outline bookmark-btn" data-qid="${q.id}" title="Bookmark">${isBm?"⭐":"☆"}</button></div>
+              ${['A','B','C','D','E'].map(l=> q[`option${l}`] ? `<button class="option-btn ${sel===l?'selected':''}" data-option="${l}"><span class="option-label">${l}.</span> ${escapeHTML(q[`option${l}`])}</button>` : '').join('')}
+            </div>
+            <div style="display:flex;gap:8px;justify-content:space-between;">
+              <button class="btn btn-outline btn-sm" id="btnPrevQ" ${idx===0?'disabled':''}>◀ Prev</button>
+              <button class="btn btn-danger btn-sm" id="btnEndExam">⏹ End</button>
+              <button class="btn btn-primary btn-sm" id="btnNextQ">${idx<total-1?'Next ▶':'Submit ✅'}</button>
+            </div>`;
+        }
+
+        function renderExamResults() {
+            const results = AppState.lastExamResults || [];
+            const total = results.length;
+            const score = results.filter(r => r.correct).length;
+            const pct = total ? Math.round((score / total) * 100) : 0;
+            const elapsed = AppState.examStartTime ? Math.round((Date.now() - AppState.examStartTime) / 1000) : 0;
+            if (total && !AppState._examSaved) {
+    AppState._examSaved = true;
+    db.saveExamResult({ score, total, percentage: pct, elapsed });
+}
+            
+            return `
+            <div class="card text-center" style="padding-top: 30px; padding-bottom: 30px;">
+              <div style="font-size:4rem; margin-bottom: 10px;">${pct>=70?'🎉':'📚'}</div>
+              <h2>Exam Complete</h2>
+              <div class="stat-value" style="font-size: 3rem; margin: 15px 0;">${pct}%</div>
+              <p style="font-size: 1.1rem; color: var(--text2); margin-bottom: 25px;">${score} out of ${total} correct<br>Time taken: ${formatTime(elapsed)}</p>
+              <button class="btn btn-primary btn-block" id="btnReviewExam" style="margin-bottom: 10px; font-size: 1.1rem; padding: 14px;">🔍 Review Answers & Explanations</button>
+              <button class="btn btn-outline btn-block" data-nav="dashboard">🏠 Go to Dashboard</button>
+            </div>`;
+        }
+
+        // --- FULLY REDESIGNED REVIEW SYSTEM ---
+        function reviewExamResults() {
+            if (!AppState.lastExamResults) return;
+            
+            const html = AppState.lastExamResults.map((r, i) => {
+                const optionsHtml = ['A','B','C','D','E'].map(l => {
+                    if (!r[`option${l}`]) return '';
+                    let btnClass = '';
+                    let labelStatus = '';
+                    
+                    if (l === r.correctAnswer) {
+                        btnClass = 'correct';
+                        labelStatus = '<span style="float:right; font-weight:bold;">✅ Correct Answer</span>';
+                    } else if (l === r.userAnswer && !r.correct) {
+                        btnClass = 'wrong';
+                        labelStatus = '<span style="float:right; font-weight:bold;">❌ Your Answer</span>';
+                    }
+                    
+                    return `<div class="option-btn ${btnClass}" style="cursor:default;">
+                                <span class="option-label">${l}.</span> ${escapeHTML(r[`option${l}`])} 
+                                ${labelStatus}
+                            </div>`;
+                }).join('');
+
+                const explanationHtml = r.explanation ? 
+                    `<div class="explanation-box" style="margin-top: 15px;">
+                        <strong>Explanation:</strong><br/>${escapeHTML(r.explanation)}
+                    </div>` : '';
+
+                return `
+                <div class="question-block">
+                    <div class="question-text">
+                        ${i+1}. ${escapeHTML(r.questionText)} 
+                        <span class="badge ${r.correct ? 'badge-success' : 'badge-danger'}" style="margin-left: 8px;">
+                            ${r.correct ? '✓ Correct' : '✗ Incorrect'}
+                        </span>
+                    </div>
+                    ${optionsHtml}
+                    ${explanationHtml}
+                </div>`;
+            }).join('');
+            
+            $('#mainContent').innerHTML = `
+                <div class="card">
+                    <div class="card-header">🔍 Exam Review</div>
+                    <p style="color:var(--text2);font-size:0.9rem;">Review your performance below. Correct answers are highlighted in green, and your incorrect selections are highlighted in red.</p>
+                </div>
+                ${html}
+                <div style="margin-bottom: 30px;">
+                    <button class="btn btn-primary btn-block" data-nav="exam">📝 Start New Exam</button>
+                </div>
+            `;
+            attachEventListeners();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        
+async function renderMistakes() {
+    const perf = await db.getPerformance();
+
+    // Keep only questions whose MOST RECENT attempt was wrong
+    const latest = {};
+    perf.forEach((x,i)=>{
+        const key = x.questionId;
+        latest[key] = {correct:x.correct, idx:i};
+    });
+
+    const wrongIds = Object.keys(latest)
+        .filter(id => latest[id].correct === false)
+        .map(id => Number(id));
+
+    const questions = await db.getAllQuestions();
+    const missed = questions.filter(q => wrongIds.includes(q.id));
+
+    return `
+    <div class="card">
+      <div class="card-header">❌ Missed Questions Bank</div>
+      <p>${missed.length} missed questions</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-danger" id="btnExamFromMistakes">📝 Exam From Mistakes</button>
+      <button class="btn btn-outline" data-nav="dashboard">← Dashboard</button>
+      </div>
+    </div>
+    ${missed.map(q=>`
+      <div class="question-block">
+        <div class="question-text">${q.questionText || ''}</div>
+        <span class="badge badge-danger">${q.subject || 'Unknown'}</span>
+         <div style="margin-top:8px"><strong>Correct Answer:</strong> ${q.correctAnswer||'-'}</div>
+         <div style="margin-top:4px"><strong>Explanation:</strong> ${q.explanation||'No explanation'}</div>
+         <div style="margin-top:8px;display:flex;gap:8px">
+            <button class="btn btn-sm btn-primary retry-question" data-qid="${q.id}">🔄 Retry</button>
+            <button class="btn btn-sm btn-accent add-hy" data-qid="${q.id}">⭐ High Yield</button>
+         </div>
+      </div>
+    `).join('') || '<div class="empty-state">No missed questions.</div>'}`;
+}
+
+async function renderQuestionList() {
+            const questions = await db.getAllQuestions();
+            const sq = AppState.searchQuery.toLowerCase();
+            const qf = AppState.questionFilters || {subject:'all',chapter:'all',topic:'all',difficulty:'all'};
+const bmIds = await db.getAllBookmarkedIds();
+const hyIds = await db.getAllHighYieldIds();
+const perf2 = await db.getPerformance();
+const latest2={}; perf2.forEach(x=>latest2[x.questionId]=x.correct);
+const missedIds=Object.keys(latest2).filter(k=>latest2[k]===false).map(Number);
+
+window.__bmIds=bmIds;
+window.__hyIds=hyIds;
+window.__missedIds=missedIds;
+
+const filtered = questions.filter(q=>{
+ const matchesSearch = !sq || [
+  q.questionText,q.explanation,q.subject,q.chapter,q.topic,
+  Array.isArray(q.tags)?q.tags.join(' '):q.tags
+ ].join(' ').toLowerCase().includes(sq);
+
+ const matchesSubject = qf.subject==='all' || (q.subject||'')===qf.subject;
+ const matchesChapter = qf.chapter==='all' || (q.chapter||'')===qf.chapter;
+ const matchesTopic = qf.topic==='all' || (q.topic||'')===qf.topic;
+ const matchesDifficulty = qf.difficulty==='all' || (q.difficulty||'Medium')===qf.difficulty;
+
+ let matchesSpecial = true;
+const special = qf.special || 'all';
+if (special==='bookmarked' && !(window.__bmIds||[]).includes(q.id)) matchesSpecial=false;
+if (special==='highyield' && !(window.__hyIds||[]).includes(q.id)) matchesSpecial=false;
+if (special==='missed' && !(window.__missedIds||[]).includes(q.id)) matchesSpecial=false;
+return matchesSearch && matchesSubject && matchesChapter && matchesTopic && matchesDifficulty && matchesSpecial;
+});            return `
+            <div class="card">
+              <div class="card-header">📋 Questions (${filtered.length})</div>
+              <input type="text" id="questionSearchInput" placeholder="Search question, explanation, subject, chapter, topic, tags..." value="${escapeHTML(AppState.searchQuery)}">
+              <div class="form-row">
+<div><select id="questionSubjectFilter"><option value="all">All Subjects</option></select></div>
+<div><select id="questionChapterFilter"><option value="all">All Chapters</option></select></div>
+<div><select id="questionTopicFilter"><option value="all">All Topics</option></select></div>
+</div>
+<div class="form-row">
+<div><select id="questionDifficultyFilter"><option value="all">All Difficulties</option><option>Easy</option><option>Medium</option><option>Hard</option></select></div>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+<button class="btn btn-sm btn-outline" data-qfilter="all">All</button>
+<button class="btn btn-sm btn-outline" data-qfilter="bookmarked">⭐ Bookmarked</button>
+<button class="btn btn-sm btn-outline" data-qfilter="highyield">🔥 High Yield</button>
+<button class="btn btn-sm btn-outline" data-qfilter="missed">❌ Missed</button>
+</div>
+<button class="btn btn-sm btn-primary" id="btnAddQuestion">➕ Add</button>
+            </div>
+            ${filtered.slice(0,200).map(q=>`
+            <div class="question-block">
+              <div style="display:flex;justify-content:space-between;">
+                <strong>${highlightText(q.questionText?.substring(0,100), AppState.searchQuery)}</strong>
+                <button class="btn-icon btn-sm bookmark-btn" data-qid="${q.id}">${bmIds.includes(q.id)?'⭐':'☆'}</button>
+              </div>
+              <div class="flex-wrap">
+                <span class="badge badge-primary">${escapeHTML(q.subject||'?')}</span>
+                <span class="badge badge-accent">${escapeHTML(q.chapter||'?')}</span>
+                ${q.group ? `<span class="badge badge-group">${escapeHTML(q.group)}</span>` : ''}
+              </div>
+              <button class="btn btn-sm btn-outline view-q-btn" data-qid="${q.id}">👁 View</button>
+            </div>`).join('')}
+            ${filtered.length>50?'<p style="color:var(--text2);">Showing 50 of many. Use search to narrow.</p>':''}
+            ${filtered.length===0?'<div class="empty-state"><h3>No questions found</h3><p>Add or import questions to get started.</p></div>':''}`;
+        }
+
+        function renderImportExport() {
+            return `
+            <div class="card"><div class="card-header">📥 Import</div>
+              <div class="form-row">
+                <div><label>Format</label><select id="importFormat"><option value="json">JSON</option><option value="csv">CSV</option></select></div>
+                <div><label>Group Name (optional)</label><input type="text" id="importGroup" placeholder="e.g., ENT Set 1"></div>
+              </div>
+              <textarea id="importData" rows="5" placeholder="Paste JSON or CSV data..."></textarea>
+              <input type="file" id="importFile" accept=".json,.csv">
+              <button class="btn btn-primary" id="btnImport">📥 Import</button>
+              <button class="btn btn-outline" id="btnLoadSample">🧪 Load Sample Questions</button>
+              <button class="btn btn-danger mt-2" id="btnClearAll">🗑 Clear All</button>
+              <hr style="margin:10px 0">
+              <select id="deleteGroupName" placeholder="Group / Book Name">
+              <button class="btn btn-danger mt-2" id="btnDeleteGroup">🗑 Delete One Book</button>
+            </div>
+            <div class="card"><div class="card-header">📤 Backup</div>
+              <button class="btn btn-accent" id="btnExport">📤 Export All</button>
+              <button class="btn btn-outline" id="btnRestore">📥 Restore Backup</button>
+              <input type="file" id="restoreFile" accept=".json" hidden>
+            </div>`;
+        }
+
+        // ============================================================
+        //  STUDY HELPERS
+        // ============================================================
+        async function renderStudyQuestion() {
+            if (!AppState.studyQuestions || AppState.studyIndex >= AppState.studyQuestions.length) {
+                $('#studyArea').innerHTML = '<div class="card text-center"><h3>Session Complete!</h3><button class="btn btn-primary" data-nav="study">New Session</button></div>';
+                return;
+            }
+            const q = AppState.studyQuestions[AppState.studyIndex];
+            const isBm = await db.isBookmarked(q.id);
+            const reveal = AppState.studyRevealed[q.id];
+            let html = `
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;"><span class="badge badge-primary">${AppState.studyIndex+1}/${AppState.studyQuestions.length}</span><button class="btn-icon btn-sm" id="studyBookmark" data-qid="${q.id}">${isBm?'⭐':'☆'}</button><button class="btn-icon btn-sm" id="studyHighYield" data-qid="${q.id}">🔥</button></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:${((AppState.studyIndex+1)/AppState.studyQuestions.length)*100}%"></div></div>
+            </div>
+            <div class="question-block">
+              <div class="question-text">${AppState.studyIndex+1}. ${escapeHTML(q.questionText)}</div>
+              ${['A','B','C','D','E'].map(l=> q[`option${l}`] ? `<button class="option-btn ${AppState.studyAnswers[q.id]===l?'selected':''} ${reveal?(l===q.correctAnswer?'correct':(AppState.studyAnswers[q.id]===l?'wrong':'')):''}" data-study-opt="${l}" ${reveal?'disabled':''}><span class="option-label">${l}.</span> ${escapeHTML(q[`option${l}`])}</button>` : '').join('')}
+              ${reveal ? `<div class="explanation-box"><strong>✅ ${q.correctAnswer}</strong>: ${escapeHTML(q.explanation||'No explanation provided.')}</div>` : ''}
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-outline btn-sm" id="btnStudyPrev" ${AppState.studyIndex===0?'disabled':''}>◀</button>
+              ${!reveal?`<button class="btn btn-accent btn-sm" id="btnReveal">👁 Reveal</button>`:''}
+              <button class="btn btn-primary btn-sm" id="btnStudyNext">▶</button>
+            </div>`;
+            $('#studyArea').innerHTML = html;
+            attachStudyListeners(q);
+        }
+
+        function attachStudyListeners(q) {
+            const bookmarkBtn = $('#studyBookmark');
+            if (bookmarkBtn) {
+                bookmarkBtn.addEventListener('click', async function() {
+                    const id = parseInt(this.dataset.qid);
+                    const bm = await db.toggleBookmark(id);
+                    this.textContent = bm ? '⭐' : '☆';
+                });
+            }
+            $$('[data-study-opt]').forEach(b => {
+                b.addEventListener('click', async function() {
+                    const selected = this.dataset.studyOpt;
+                    AppState.studyAnswers[q.id] = selected;
+                    AppState.studyRevealed[q.id] = true;
+                    try {
+                        await db.recordPerformance({
+                            questionId: q.id,
+                            subject: q.subject || 'Unknown',
+                            chapter: q.chapter || 'Unknown',
+                            topic: q.topic || 'Unknown',
+                            correct: selected === q.correctAnswer,
+                            timestamp: new Date().toISOString()
+                        });
+                    } catch(e) {
+                        console.error('Performance tracking error', e);
+                    }
+                    renderStudyQuestion();
+                });
+            });
+            const revealBtn = $('#btnReveal');
+            if (revealBtn) revealBtn.addEventListener('click', () => { AppState.studyRevealed[q.id] = true; renderStudyQuestion(); });
+            const nextBtn = $('#btnStudyNext');
+            if (nextBtn) nextBtn.addEventListener('click', () => { AppState.studyIndex++; renderStudyQuestion(); });
+            const prevBtn = $('#btnStudyPrev');
+            if (prevBtn) prevBtn.addEventListener('click', () => { AppState.studyIndex = Math.max(0, AppState.studyIndex - 1); renderStudyQuestion(); });
+        }
+
+        function submitExam() {
+            if (AppState.examTimer) { clearInterval(AppState.examTimer); AppState.examTimer = null; }
+            const answers = AppState.examAnswers;
+            const questions = AppState.examQuestions;
+            
+            // Map the exact result for the review system
+            const results = questions.map(q => ({
+                ...q,
+                userAnswer: answers[q.id] || '',
+                correct: (answers[q.id] || '') === q.correctAnswer
+            }));
+            
+            AppState.lastExamResults = results;
+            AppState.examInProgress = false;
+            AppState.examShowResults = true;
+            
+            renderViewSafely('exam').then(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ============================================================
+        //  MODALS
+        // ============================================================
+        function showAddQuestionModal(q) {
+            const isEdit = !!q;
+            const fields = `
+            <div class="modal-field"><label>Question Text *</label><input type="text" id="addQuestionText" value="${isEdit?escapeHTML(q.questionText):''}" placeholder="Enter question"></div>
+            <div class="form-row">
+              <div class="modal-field"><label>Option A *</label><input type="text" id="addOptionA" value="${isEdit?escapeHTML(q.optionA):''}"></div>
+              <div class="modal-field"><label>Option B *</label><input type="text" id="addOptionB" value="${isEdit?escapeHTML(q.optionB):''}"></div>
+              <div class="modal-field"><label>Option C</label><input type="text" id="addOptionC" value="${isEdit?escapeHTML(q.optionC||''):''}"></div>
+              <div class="modal-field"><label>Option D</label><input type="text" id="addOptionD" value="${isEdit?escapeHTML(q.optionD||''):''}"></div>
+              <div class="modal-field"><label>Option E</label><input type="text" id="addOptionE" value="${isEdit?escapeHTML(q.optionE||''):''}"></div>
+            </div>
+            <div class="form-row">
+              <div class="modal-field"><label>Correct Answer *</label><select id="addCorrectAnswer"><option value="A" ${isEdit&&q.correctAnswer==='A'?'selected':''}>A</option><option value="B" ${isEdit&&q.correctAnswer==='B'?'selected':''}>B</option><option value="C" ${isEdit&&q.correctAnswer==='C'?'selected':''}>C</option><option value="D" ${isEdit&&q.correctAnswer==='D'?'selected':''}>D</option><option value="E" ${isEdit&&q.correctAnswer==='E'?'selected':''}>E</option></select></div>
+              <div class="modal-field"><label>Subject *</label><select id="addSubject">${ALL_SUBJECTS.map(s=>`<option value="${escapeHTML(s)}" ${isEdit&&q.subject===s?'selected':''}>${escapeHTML(s)}</option>`).join('')}</select></div>
+              <div class="modal-field"><label>Chapter *</label><select id="addChapter"><option value="">Select chapter</option>${ALL_CHAPTERS.map(c=>`<option value="${escapeHTML(c)}" ${isEdit&&q.chapter===c?'selected':''}>${escapeHTML(c)}</option>`).join('')}</select></div>
+            </div>
+            <div class="form-row">
+              <div class="modal-field"><label>Topic</label><input type="text" id="addTopic" value="${isEdit?escapeHTML(q.topic||''):''}"></div>
+              <div class="modal-field"><label>Difficulty</label><select id="addDifficulty"><option value="Easy" ${isEdit&&q.difficulty==='Easy'?'selected':''}>Easy</option><option value="Medium" ${isEdit&&q.difficulty==='Medium'?'selected':''}>Medium</option><option value="Hard" ${isEdit&&q.difficulty==='Hard'?'selected':''}>Hard</option></select></div>
+              <div class="modal-field"><label>Group (optional)</label><input type="text" id="addGroup" value="${isEdit?escapeHTML(q.group||''):''}" placeholder="e.g., ENT Set 1"></div>
+            </div>
+            <div class="modal-field"><label>Explanation</label><textarea id="addExplanation" rows="3">${isEdit?escapeHTML(q.explanation||''):''}</textarea></div>
+            <button class="btn btn-primary btn-block" id="saveQuestionBtn">${isEdit?'Update':'Add'} Question</button>
+            <button class="btn btn-outline btn-block mt-2" onclick="closeModal()">Cancel</button>
+          `;
+            const overlay = $('#modalOverlay'); const content = $('#modalContent');
+            content.innerHTML = fields; overlay.classList.remove('hidden');
+            overlay.onclick = function(e) { if (e.target === overlay) closeModal(); };
+
+            const subjectSel = $('#addSubject'); const chapterSel = $('#addChapter');
+            if (subjectSel && chapterSel) {
+                subjectSel.addEventListener('change', function() {
+                    const subject = this.value; let chapters = [];
+                    if (subject && ENT_DATA[subject]) chapters = ENT_DATA[subject];
+                    chapterSel.innerHTML = '<option value="">Select chapter</option>' + chapters.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+                    if (isEdit && q.chapter) chapterSel.value = q.chapter;
+                });
+                setTimeout(() => subjectSel.dispatchEvent(new Event('change')), 0);
+            }
+
+            const saveBtn = $('#saveQuestionBtn');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', async function() {
+                    const qObj = {
+                        questionText: $('#addQuestionText').value.trim(), optionA: $('#addOptionA').value.trim(),
+                        optionB: $('#addOptionB').value.trim(), optionC: $('#addOptionC').value.trim(),
+                        optionD: $('#addOptionD').value.trim(), optionE: $('#addOptionE').value.trim(),
+                        correctAnswer: $('#addCorrectAnswer').value, subject: $('#addSubject').value,
+                        chapter: $('#addChapter').value, topic: $('#addTopic').value.trim(),
+                        difficulty: $('#addDifficulty').value, explanation: $('#addExplanation').value.trim(),
+                        group: $('#addGroup').value.trim()
+                    };
+                    if (!qObj.questionText || !qObj.optionA || !qObj.optionB || !qObj.correctAnswer || !qObj.subject || !qObj.chapter) {
+                        showToast('Please fill all required fields.', 'warning'); return;
+                    }
+                    if (isEdit) { await db.deleteQuestion(q.id); }
+                    await db.addQuestion(qObj); closeModal(); showToast(isEdit ? 'Question updated!' : 'Question added!', 'success'); navigateTo('questions');
+                });
+            }
+        }
+
+        function showQuestionModal(q) {
+            const html = q ? `
+            <h3>Question</h3>
+            <div class="question-block">
+              <div class="question-text">${escapeHTML(q.questionText)}</div>
+              ${['A','B','C','D','E'].map(l=> q[`option${l}`]?`<div class="option-btn ${l===q.correctAnswer?'correct':''}"><span class="option-label">${l}.</span> ${escapeHTML(q[`option${l}`])}</div>`:'').join('')}
+              ${q.explanation ? `<div class="explanation-box">${escapeHTML(q.explanation)}</div>` : ''}
+              <div class="flex-wrap" style="margin-top:10px;">
+                <span class="badge badge-primary">${escapeHTML(q.subject||'')}</span>
+                <span class="badge badge-accent">${escapeHTML(q.chapter||'')}</span>
+                ${q.group ? `<span class="badge badge-group">${escapeHTML(q.group)}</span>` : ''}
+              </div>
+            </div>
+            <button class="btn btn-outline btn-block" onclick="closeModal()">Close</button>` : '<h3>Question not found</h3><button class="btn btn-outline btn-block" onclick="closeModal()">Close</button>';
+            const overlay = $('#modalOverlay'); const content = $('#modalContent');
+            content.innerHTML = html; overlay.classList.remove('hidden');
+            overlay.onclick = function(e) { if (e.target === overlay) closeModal(); };
+        }
+
+        async function handleImport() {
+            const format = $('#importFormat').value; const raw = $('#importData').value; const groupName = $('#importGroup').value.trim();
+            try {
+                let questions = [];
+                if (format === 'json') questions = JSON.parse(raw);
+                else if (format === 'csv') questions = parseCSV(raw);
+                if (!Array.isArray(questions) || questions.length === 0) throw new Error('No valid questions');
+                const count = await db.bulkImport(questions, groupName);
+                showToast(`Imported ${count} questions and auto-categorized!`, 'success');
+                navigateTo('dashboard');
+            } catch (e) { showToast('Import error: ' + e.message, 'error'); }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n'); if (lines.length < 2) return [];
+            const headers = lines[0].split(',').map(h => h.trim());
+            return lines.slice(1).map(line => {
+                const vals = line.split(',').map(v => v.trim()); const q = {};
+                headers.forEach((h, i) => { q[h] = vals[i] || ''; }); return q;
+            });
+        }
+
+        async function loadSamples() {
+            const samples = [
+                { questionText: 'Most common cause of epistaxis in children?', optionA: 'Trauma', optionB: 'Allergy', optionC: 'Little\'s area picking', optionD: 'Sinusitis', optionE: 'FB', correctAnswer: 'C', explanation: 'Digital trauma to Little\'s area is the most common cause in the pediatric population.', subject: 'Rhinology', chapter: 'Epistaxis', topic: 'Pediatric', difficulty: 'Easy', group: 'Sample' },
+                { questionText: 'Unilateral nasal mass + epistaxis in 45M?', optionA: 'Polyp', optionB: 'Inverted papilloma', optionC: 'Angiofibroma', optionD: 'SCC', optionE: 'Adenoid', correctAnswer: 'B', explanation: 'Inverted papilloma often presents as a unilateral mass and can bleed. Angiofibroma is typically seen in adolescent males.', subject: 'Rhinology', chapter: 'Endoscopic management of sinonasal tumours', topic: 'Inverted Papilloma', difficulty: 'Medium', group: 'Sample' },
+                { questionText: 'Rinne test is for?', optionA: 'Weber', optionB: 'Conductive loss', optionC: 'Sensorineural', optionD: 'Central', optionE: 'None', correctAnswer: 'B', explanation: 'Rinne test compares air conduction to bone conduction to detect conductive hearing loss.', subject: 'Otology', chapter: 'Clinical examination of the ears and hearing', topic: 'Tuning Fork', difficulty: 'Easy', group: 'Sample' }
+            ];
+            await db.bulkImport(samples); showToast('Sample questions loaded!', 'success'); navigateTo('dashboard');
+        }
+
+        async function handleExport() {
+            const data = await db.exportAllData();
+            const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ent-backup.json'; a.click();
+            showToast('Backup saved.', 'success');
+        }
+
+        async function handleRestore(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const text = await file.text();
+            try {
+                const data = JSON.parse(text);
+                if (confirm(`Restore ${data.questions?.length||0} questions? This will replace all current data.`)) {
+                    await db.clearAndRestore(data); showToast('Restored!', 'success'); navigateTo('dashboard');
+                }
+            } catch (e) { showToast('Invalid file', 'error'); }
+            e.target.value = '';
+        }
+
+        async function clearAllHandler() {
+    const groups = await db.getAllGroups();
+    const modal = $('#modalOverlay');
+    const content = $('#modalContent');
+    const groupOptions = groups.map(g => `<option value="${escapeHTML(g)}">${escapeHTML(g)}</option>`).join('');
+
+    content.innerHTML = `
+        <div class="card">
+            <h3>🗑 Manage Data</h3>
+            <div style="margin-bottom:15px;">
+                <label>Delete Specific Group:</label>
+                <select id="clearGroupSelect" style="margin-bottom:10px;">
+                    ${groupOptions.length > 0 ? groupOptions : '<option>No groups found</option>'}
+                </select>
+                <button class="btn btn-danger" onclick="executeDeleteGroup()">Delete Selected Group</button>
+            </div>
+            <hr style="margin: 15px 0;">
+            <button class="btn btn-danger btn-block" onclick="executeClearAll()">WIPE EVERYTHING</button>
+            <button class="btn btn-outline btn-block mt-2" onclick="closeModal()">Cancel</button>
+        </div>
+    `;
+    modal.classList.remove('hidden');
+}
+
+window.executeDeleteGroup = async function() {
+    const groupToClear = $('#clearGroupSelect').value;
+    if (!confirm(`Are you sure you want to delete the group: "${groupToClear}"?`)) return;
+    
+    const qs = await db.getAllQuestions();
+    const tx = db.db.transaction('questions', 'readwrite');
+    const store = tx.objectStore('questions');
+    qs.forEach(q => { if (q.group === groupToClear) store.delete(q.id); });
+    
+    tx.oncomplete = () => { closeModal(); showToast(`Group deleted.`, 'success'); navigateTo('dashboard'); };
+};
+
+window.executeClearAll = async function() {
+    if (confirm('⚠️ WARNING: This will delete EVERYTHING. Are you sure?')) {
+        await db.clearAllQuestions(); 
+        showToast('All data cleared.', 'success'); 
+        navigateTo('dashboard');
+        closeModal();
+    }
+};
+
+
+        function attachEventListeners() {
+            $$('[data-nav]').forEach(btn => { btn.addEventListener('click', function() { const view = this.dataset.nav; if (view) navigateTo(view); }); });
+            
+            const examSubject = $('#examSubject');
+            if (examSubject) {
+                examSubject.addEventListener('change', function() {
+                    const subject = this.value; let chapters = [];
+                    if (subject !== 'all' && ENT_DATA[subject]) chapters = ENT_DATA[subject];
+                    const chSel = $('#examChapter');
+                    if (chSel) {
+                        chSel.innerHTML = '<option value="all">All</option>' + chapters.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+                        chSel.value = 'all'; chSel.dispatchEvent(new Event('change'));
+                    }
+                });
+                setTimeout(() => examSubject.dispatchEvent(new Event('change')), 10);
+            }
+
+            const studySubject = $('#studySubject');
+            if (studySubject) studySubject.addEventListener('change', function() { AppState.studyFilter.subject = this.value; AppState.studyFilter.chapter = 'all'; AppState.studyFilter.topic = 'all'; navigateTo('study'); });
+            const studyChapter = $('#studyChapter');
+            if (studyChapter) studyChapter.addEventListener('change', function() { AppState.studyFilter.chapter = this.value; AppState.studyFilter.topic = 'all'; navigateTo('study'); });
+            const studyTopic = $('#studyTopic');
+            if (studyTopic) studyTopic.addEventListener('change', function() { AppState.studyFilter.topic = this.value; navigateTo('study'); });
+            const studyGroup = $('#studyGroup');
+            if (studyGroup) studyGroup.addEventListener('change', function() { AppState.studyFilter.group = this.value; navigateTo('study'); });
+
+            $$('[data-study-mode]').forEach(btn => { btn.addEventListener('click', function() { AppState.studyFilter.mode = this.dataset.studyMode; navigateTo('study'); }); });
+
+            const startStudy = $('#btnStartStudy');
+            if (startStudy) {
+                startStudy.addEventListener('click', async function() {
+                    const questions = await db.getAllQuestions(); const sf = AppState.studyFilter;
+                    let filtered = questions;
+                    if (sf.subject !== 'all') filtered = filtered.filter(q => (q.subject || 'Uncategorized') === sf.subject);
+                    if (sf.chapter !== 'all') filtered = filtered.filter(q => (q.chapter || 'General') === sf.chapter);
+                    if (sf.topic !== 'all') filtered = filtered.filter(q => (q.topic || 'General') === sf.topic);
+                    if (sf.group !== 'all') filtered = filtered.filter(q => (q.group || '') === sf.group);
+                    if (sf.mode === 'bookmarked') { const bIds = await db.getAllBookmarkedIds(); filtered = filtered.filter(q => bIds.includes(q.id)); }
+             if (sf.mode === 'highyield') { const hyIds = await db.getAllHighYieldIds(); filtered = filtered.filter(q => hyIds.includes(q.id)); }
+                    if (filtered.length === 0) { showToast('No questions match filters.', 'warning'); return; }
+                    AppState.studyQuestions = [...filtered].sort(() => Math.random() - 0.5);
+                    AppState.studyIndex = 0; AppState.studyAnswers = {}; AppState.studyRevealed = {};
+                    renderStudyQuestion();
+                });
+            }
+
+            
+const btnSelectAllBooks = $('#btnSelectAllBooks');
+if(btnSelectAllBooks){
+ btnSelectAllBooks.addEventListener('click',()=>{
+   const sel=document.getElementById('examGroup');
+   [...sel.options].forEach(o=>{ if(o.value!=='all') o.selected=true; });
+ });
+}
+
+document.querySelectorAll('.book-card,.subject-card').forEach(el=>{if(!el.dataset.bound){el.dataset.bound=1;el.addEventListener('click',()=>el.classList.toggle('selected'));}});
+
+const startExam = $('#btnStartExam');
+            if (startExam) {
+                startExam.addEventListener('click', async function() {
+                    try {
+                        const selectedSubjects=[...document.querySelectorAll('.subject-card.selected[data-subject]')].map(x=>x.dataset.subject);
+                        const selectedChapters=[...document.querySelectorAll('.subject-card.selected[data-chapter]')].map(x=>x.dataset.chapter);
+                        const selectedGroups=[...document.querySelectorAll('.book-card.selected[data-book]')].map(x=>x.dataset.book);
+                        const count = parseInt($('#examCount')?.value || 20); const timerMin = parseInt($('#examTimerMinutes')?.value || 0);
+                        const difficulty = $('#examDifficulty')?.value || 'all';
+                        let questions = await db.getAllQuestions();
+                        if (selectedSubjects.length) questions = questions.filter(q => selectedSubjects.includes(q.subject || 'Uncategorized'));
+                        if (selectedChapters.length) questions = questions.filter(q => selectedChapters.includes(q.chapter || 'General'));
+                        if (selectedGroups.length) questions = questions.filter(q => selectedGroups.includes(q.group || ''));
+                        if (difficulty !== 'all') questions = questions.filter(q => q.difficulty === difficulty);
+                        const bookmarkedOnly = $('#examBookmarkedOnly')?.checked;
+                        if (bookmarkedOnly){ const bIds=await db.getAllBookmarkedIds(); questions=questions.filter(q=>bIds.includes(q.id)); }
+                        if (questions.length === 0) { showToast('No questions available.', 'warning'); return; }
+                        AppState.examQuestions = [...questions].sort(() => Math.random() - 0.5).slice(0, Math.min(count, questions.length));
+                        AppState.examAnswers = { currentIndex: 0 }; AppState._examSaved = false;
+AppState.examInProgress = true;
+                        AppState.examTimeRemaining = timerMin * 60; AppState.examStartTime = Date.now();
+                        if (AppState.examTimer) { clearInterval(AppState.examTimer); AppState.examTimer = null; }
+                        if (AppState.examTimeRemaining > 0) {
+                            AppState.examTimer = setInterval(() => {
+                                AppState.examTimeRemaining--; const disp = $('#examTimerDisplay');
+                                if (disp) { disp.textContent = formatTime(AppState.examTimeRemaining); disp.className = 'timer-display' + (AppState.examTimeRemaining < 120 ? ' timer-warning' : '') + (AppState.examTimeRemaining < 60 ? ' timer-danger' : ''); }
+                                if (AppState.examTimeRemaining <= 0) { clearInterval(AppState.examTimer); AppState.examTimer = null; showToast('Time up! Submitting...', 'warning'); submitExam(); }
+                            }, 1000);
+                        }
+                        renderViewSafely('exam');
+                    } catch (e) { showToast('Error: ' + e.message, 'error'); }
+                });
+            }
+
+            const nextQ = $('#btnNextQ');
+            if (nextQ) {
+                nextQ.addEventListener('click', function() {
+                    const idx = AppState.examAnswers.currentIndex || 0;
+                    if (idx < AppState.examQuestions.length - 1) { AppState.examAnswers.currentIndex = idx + 1; renderViewSafely('exam'); } 
+                    else { submitExam(); }
+                });
+            }
+            const prevQ = $('#btnPrevQ');
+            if (prevQ) prevQ.addEventListener('click', function() { const idx = AppState.examAnswers.currentIndex || 0; if (idx > 0) { AppState.examAnswers.currentIndex = idx - 1; renderViewSafely('exam'); } });
+            const endExam = $('#btnEndExam');
+            if (endExam) endExam.addEventListener('click', function() { if (confirm('End exam and submit?')) submitExam(); });
+            
+            const reviewExam = $('#btnReviewExam');
+            if (reviewExam) reviewExam.addEventListener('click', reviewExamResults);
+
+            $$('.option-btn[data-option]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const idx = AppState.examAnswers.currentIndex || 0; const q = AppState.examQuestions[idx];
+                    if (q) AppState.examAnswers[q.id] = this.dataset.option;
+                    renderViewSafely('exam');
+                });
+            });
+
+            $$('.bookmark-btn').forEach(b => { b.addEventListener('click', async function(e) { e.stopPropagation(); const id = parseInt(this.dataset.qid); await db.toggleBookmark(id); renderViewSafely(AppState.currentView); }); });
+            $$('.view-q-btn').forEach(b => { b.addEventListener('click', async function() { const q = await db.getQuestion(parseInt(this.dataset.qid)); if (q) showQuestionModal(q); }); });
+            const addQ = $('#btnAddQuestion'); if (addQ) addQ.addEventListener('click', function() { showAddQuestionModal(null); });
+            const clearDash = $('#btnClearAllDashboard'); if (clearDash) clearDash.addEventListener('click', clearAllHandler);
+            const clearAll = $('#btnClearAll'); if (clearAll) clearAll.addEventListener('click', clearAllHandler);
+            const importBtn = $('#btnImport'); if (importBtn) importBtn.addEventListener('click', handleImport);
+            const sampleBtn = $('#btnLoadSample'); if (sampleBtn) sampleBtn.addEventListener('click', loadSamples);
+            const exportBtn = $('#btnExport'); if (exportBtn) exportBtn.addEventListener('click', handleExport);
+            const restoreBtn = $('#btnRestore'); if (restoreBtn) restoreBtn.addEventListener('click', function() { $('#restoreFile').click(); });
+            const restoreFile = $('#restoreFile'); if (restoreFile) restoreFile.addEventListener('change', handleRestore);
+            const importFile = $('#importFile');
+            if (importFile) importFile.addEventListener('change', function(e) { const file = e.target.files[0]; if (!file) return; const r = new FileReader(); r.onload = ev => $('#importData').value = ev.target.result; r.readAsText(file); });
+            const searchInput = $('#questionSearchInput');
+            if (searchInput) searchInput.addEventListener('input', function() {
+    AppState.searchQuery = this.value;
+    clearTimeout(window.searchDebounceTimer);
+    window.searchDebounceTimer = setTimeout(() => {
+        renderViewSafely('questions').then(() => {
+            const el=document.getElementById('questionSearchInput');
+            if(el){
+                el.focus();
+                el.setSelectionRange(AppState.searchQuery.length, AppState.searchQuery.length);
+            }
+        });
+    },150);
+});
+        }
+
+        document.getElementById('btnDarkMode').addEventListener('click', async () => { AppState.darkMode = !AppState.darkMode; document.body.classList.toggle('dark-mode', AppState.darkMode); await db.setSetting('darkMode', AppState.darkMode); document.getElementById('btnDarkMode').textContent = AppState.darkMode ? '☀️' : '🌓'; });
+        document.getElementById('btnSearch').addEventListener('click', () => { navigateTo('questions'); setTimeout(() => { const inp = $('#questionSearchInput'); if (inp) inp.focus(); }, 150); });
+        // ============================================================
+        //  SECURE PASSWORD PROTECTED ACTIONS
+        // ============================================================
+        function checkAdminAccess() {
+            const password = prompt("Enter Administrator Password:");
+            return password === "adam2016"; 
+        }
+
+        window.clearAllHandler = async function() {
+            if (!checkAdminAccess()) { alert("Incorrect Password!"); return; }
+            const groups = await db.getAllGroups();
+            const modal = $('#modalOverlay');
+            const content = $('#modalContent');
+            const groupOptions = groups.map(g => `<option value="${escapeHTML(g)}">${escapeHTML(g)}</option>`).join('');
+
+            content.innerHTML = `
+                <h3>🗑 Clear Data</h3>
+                <div style="margin-bottom:15px;">
+                    <label>Delete entire Group:</label>
+                    <select id="clearGroupSelect" style="margin-bottom:10px;">
+                        ${groupOptions.length > 0 ? groupOptions : '<option>No groups found</option>'}
+                    </select>
+                    <button class="btn btn-danger" onclick="executeClearGroup()">Delete Selected Group</button>
+                </div>
+                <hr>
+                <button class="btn btn-danger" onclick="executeClear('questions')">Delete ALL Questions</button>
+                <button class="btn btn-danger" onclick="executeClear('all')">WIPE EVERYTHING</button>
+                <button class="btn btn-outline btn-block mt-2" onclick="closeModal()">Cancel</button>
+            `;
+            modal.classList.remove('hidden');
+        };
+
+        window.executeClearGroup = async function() {
+            const groupToClear = $('#clearGroupSelect').value;
+            if (!confirm(`Are you sure you want to delete the entire group: "${groupToClear}"?`)) return;
+            const qs = await db.getAllQuestions();
+            const tx = db.db.transaction('questions', 'readwrite');
+            const store = tx.objectStore('questions');
+            qs.forEach(q => { if (q.group === groupToClear) store.delete(q.id); });
+            tx.oncomplete = () => { closeModal(); showToast(`Group deleted.`, 'success'); navigateTo('dashboard'); };
+        };
+
+        window.executeClear = async function(type) {
+            if (!confirm("Are you sure? This action cannot be undone.")) return;
+            const tx = db.db.transaction(['questions', 'examHistory', 'bookmarks', 'notes'], 'readwrite');
+            if (type === 'questions') tx.objectStore('questions').clear();
+            if (type === 'all') {
+                tx.objectStore('questions').clear();
+                tx.objectStore('examHistory').clear(); tx.objectStore('performance').clear(); tx.objectStore('highYield').clear();
+                tx.objectStore('bookmarks').clear();
+                tx.objectStore('notes').clear();
+            }
+            tx.oncomplete = () => { closeModal(); showToast('Data cleared.', 'success'); navigateTo('dashboard'); };
+        };
+
+        (async function init() {
+            await db.ready;
+            const dark = await db.getSetting('darkMode', false);
+            if (dark) { document.body.classList.add('dark-mode'); AppState.darkMode = true; document.getElementById('btnDarkMode').textContent = '☀️'; }
+            $$('.nav-item').forEach(item => { item.addEventListener('click', function() { const view = this.dataset.view; if (view) navigateTo(view); }); });
+            navigateTo('dashboard');
+        })();
+        // ============================================================
+        //  PASSWORD PROTECTION FOR SENSITIVE ACTIONS
+        // ============================================================
+        function checkAdminAccess() {
+            const password = prompt("Enter Administrator Password:");
+            return password === "adam2016"; // You can change adam2016 to your password
+        }
+
+        // --- OVERRIDE IMPORT ---
+        const originalImport = window.handleImport;
+        window.handleImport = async function() {
+            if (!checkAdminAccess()) {
+                alert("Incorrect Password!");
+                return;
+            }
+            // If password is correct, run original import logic
+            const format = $('#importFormat').value; const raw = $('#importData').value; const groupName = $('#importGroup').value.trim();
+            try {
+                let questions = [];
+                if (format === 'json') questions = JSON.parse(raw);
+                else if (format === 'csv') questions = parseCSV(raw);
+                if (!Array.isArray(questions) || questions.length === 0) throw new Error('No valid questions');
+                const count = await db.bulkImport(questions, groupName);
+                showToast(`Imported ${count} questions!`, 'success');
+                navigateTo('dashboard');
+            } catch (e) { showToast('Import error: ' + e.message, 'error'); }
+        };
+
+        // --- OVERRIDE CLEAR ALL ---
+        window.clearAllHandler = async function() {
+            if (!checkAdminAccess()) {
+                alert("Incorrect Password!");
+                return;
+            }
+            if (confirm('⚠️ WARNING: This will delete EVERYTHING. Are you sure?')) {
+                await db.clearAllQuestions();
+                showToast('All data cleared.', 'success');
+                navigateTo('dashboard');
+            }
+        };
+    
+window.generateWeakTopicAnalytics = async function(){
+ const perf = await db.getPerformance();
+ const stats = {};
+ perf.forEach(r=>{
+   const key = `${r.subject||'Unknown'}|||${r.chapter||'Unknown'}|||${r.topic||'Unknown'}`;
+   if(!stats[key]) stats[key]={total:0,correct:0,subject:r.subject||'Unknown',chapter:r.chapter||'Unknown',topic:r.topic||'Unknown'};
+   stats[key].total++;
+   if(r.correct) stats[key].correct++;
+ });
+ return Object.values(stats)
+   .map(x=>({...x,accuracy:Math.round((x.correct*100)/x.total)}))
+   .sort((a,b)=>a.accuracy-b.accuracy);
+};
+
+
+async function populateDeleteBookDropdown(){
+ const sel=document.getElementById('deleteGroupName');
+ if(!sel) return;
+ const groups=await db.getAllGroups();
+ sel.innerHTML='<option value="">Select Book</option>'+groups.map(g=>`<option value="${g}">${g}</option>`).join('');
+}
+setTimeout(populateDeleteBookDropdown,300);
+
+
+document.addEventListener('click', async (e)=>{
+ if(e.target.id==='btnExamFromMistakes'){
+   const perf=await db.getPerformance();
+   const latest={}; perf.forEach(x=>latest[x.questionId]=x.correct);
+   const wrongIds=Object.keys(latest).filter(k=>latest[k]===false).map(Number);
+   const qs=(await db.getAllQuestions()).filter(q=>wrongIds.includes(q.id));
+   AppState._examSaved=false;
+   AppState.examQuestions=qs;
+   AppState.examAnswers={currentIndex:0};
+   AppState.examInProgress=true;
+   AppState.examStartTime=Date.now();
+   renderViewSafely('exam');
+ }
+ if(e.target.classList.contains('add-hy')){
+   await db.toggleHighYield(Number(e.target.dataset.qid));
+   showToast('Added to High Yield','success');
+   renderViewSafely('mistakes');
+ }
+ if(e.target.classList.contains('retry-question')){
+   const qid=Number(e.target.dataset.qid);
+   const q=await db.getQuestion(qid);
+   if(!q) return;
+   AppState.studyQuestions=[q];
+   AppState.studyIndex=0;
+   AppState.studyAnswers={};
+   AppState.studyRevealed={};
+   navigateTo('study');
+   setTimeout(()=>renderStudyQuestion(),100);
+ }
+});
+
+
+function updateAvailableQuestionsInfo(){
+ try{
+   const info=document.getElementById('availableQuestionsInfo');
+   if(!info || !window.db) return;
+   db.getAllQuestions().then(qs=>{
+      const subjSel=document.getElementById('examSubject');
+      const grpSel=document.getElementById('examGroup');
+      let filtered=[...qs];
+
+      const subjects=subjSel?[...subjSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+      const groups=grpSel?[...grpSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+
+      if(subjects.length) filtered=filtered.filter(q=>subjects.includes(q.subject));
+      if(groups.length) filtered=filtered.filter(q=>groups.includes(q.group));
+
+      info.textContent='Available Questions: '+filtered.length;
+   });
+ }catch(e){}
+}
+document.addEventListener('change',e=>{
+ if(e.target && (e.target.id==='examSubject' || e.target.id==='examGroup')){
+   updateAvailableQuestionsInfo();
+ }
+});
+
+
+function populateExamChapters(){
+ const subj=document.getElementById('examSubject');
+ const chap=document.getElementById('examChapter');
+ if(!subj||!chap) return;
+ const selected=[...subj.selectedOptions].map(o=>o.value).filter(v=>v!=='all');
+ let chapters=[];
+ if(selected.length===0){ chapters=ALL_CHAPTERS; }
+ else{
+   selected.forEach(s=>{ if(ENT_DATA[s]) chapters.push(...ENT_DATA[s]); });
+ }
+ chap.innerHTML='<option value="all">All</option>'+
+   [...new Set(chapters)].sort().map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+
+document.addEventListener('change',function(e){
+ if(e.target && e.target.id==='examSubject'){
+   populateExamChapters();
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('change',function(e){
+ if(e.target && (e.target.id==='examChapter' || e.target.id==='examTopic')){
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('click',function(e){
+ if(e.target && e.target.id==='btnSelectAllSubjects'){
+   const s=document.getElementById('examSubject');
+   if(s){
+      [...s.options].forEach(o=>o.selected=true);
+      populateExamChapters();
+      if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+   }
+ }
+});
+
+
+async function populateExamTopics(){
+ const chapter=document.getElementById('examChapter');
+ const topic=document.getElementById('examTopic');
+ if(!chapter || !topic) return;
+ const qs=await db.getAllQuestions();
+ let filtered=qs;
+ if(chapter.value!=='all'){
+   filtered=filtered.filter(q=>(q.chapter||'General')===chapter.value);
+ }
+ const topics=[...new Set(filtered.map(q=>q.topic).filter(Boolean))].sort();
+ topic.innerHTML='<option value="all">All</option>'+topics.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+
+async function updateExamCounters(){
+ const info=document.getElementById('availableQuestionsInfo');
+ if(!info) return;
+ const qs=await db.getAllQuestions();
+ info.innerHTML='Total Questions: '+qs.length;
+}
+
+document.addEventListener('change',async function(e){
+ if(e.target && e.target.id==='examChapter'){
+   await populateExamTopics();
+ }
+});
+
+document.addEventListener('DOMContentLoaded',function(){
+ setTimeout(()=>{
+   if(typeof populateExamChapters==='function') populateExamChapters();
+   if(typeof updateExamCounters==='function') updateExamCounters();
+ },500);
+});
+
+</script>
+
+    <!-- PWA: register service worker for offline use + installability -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service worker registered:', reg.scope))
+                    .catch(err => console.warn('Service worker registration failed:', err));
+            });
+        }
+    
+async function populateDeleteBookDropdown(){
+ const sel=document.getElementById('deleteGroupName');
+ if(!sel) return;
+ const groups=await db.getAllGroups();
+ sel.innerHTML='<option value="">Select Book</option>'+groups.map(g=>`<option value="${g}">${g}</option>`).join('');
+}
+setTimeout(populateDeleteBookDropdown,300);
+
+
+document.addEventListener('click', async (e)=>{
+ if(e.target.id==='btnExamFromMistakes'){
+   const perf=await db.getPerformance();
+   const latest={}; perf.forEach(x=>latest[x.questionId]=x.correct);
+   const wrongIds=Object.keys(latest).filter(k=>latest[k]===false).map(Number);
+   const qs=(await db.getAllQuestions()).filter(q=>wrongIds.includes(q.id));
+   AppState._examSaved=false;
+   AppState.examQuestions=qs;
+   AppState.examAnswers={currentIndex:0};
+   AppState.examInProgress=true;
+   AppState.examStartTime=Date.now();
+   renderViewSafely('exam');
+ }
+ if(e.target.classList.contains('add-hy')){
+   await db.toggleHighYield(Number(e.target.dataset.qid));
+   showToast('Added to High Yield','success');
+   renderViewSafely('mistakes');
+ }
+ if(e.target.classList.contains('retry-question')){
+   const qid=Number(e.target.dataset.qid);
+   const q=await db.getQuestion(qid);
+   if(!q) return;
+   AppState.studyQuestions=[q];
+   AppState.studyIndex=0;
+   AppState.studyAnswers={};
+   AppState.studyRevealed={};
+   navigateTo('study');
+   setTimeout(()=>renderStudyQuestion(),100);
+ }
+});
+
+
+function updateAvailableQuestionsInfo(){
+ try{
+   const info=document.getElementById('availableQuestionsInfo');
+   if(!info || !window.db) return;
+   db.getAllQuestions().then(qs=>{
+      const subjSel=document.getElementById('examSubject');
+      const grpSel=document.getElementById('examGroup');
+      let filtered=[...qs];
+
+      const subjects=subjSel?[...subjSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+      const groups=grpSel?[...grpSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+
+      if(subjects.length) filtered=filtered.filter(q=>subjects.includes(q.subject));
+      if(groups.length) filtered=filtered.filter(q=>groups.includes(q.group));
+
+      info.textContent='Available Questions: '+filtered.length;
+   });
+ }catch(e){}
+}
+document.addEventListener('change',e=>{
+ if(e.target && (e.target.id==='examSubject' || e.target.id==='examGroup')){
+   updateAvailableQuestionsInfo();
+ }
+});
+
+
+function populateExamChapters(){
+ const subj=document.getElementById('examSubject');
+ const chap=document.getElementById('examChapter');
+ if(!subj||!chap) return;
+ const selected=[...subj.selectedOptions].map(o=>o.value).filter(v=>v!=='all');
+ let chapters=[];
+ if(selected.length===0){ chapters=ALL_CHAPTERS; }
+ else{
+   selected.forEach(s=>{ if(ENT_DATA[s]) chapters.push(...ENT_DATA[s]); });
+ }
+ chap.innerHTML='<option value="all">All</option>'+
+   [...new Set(chapters)].sort().map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+
+document.addEventListener('change',function(e){
+ if(e.target && e.target.id==='examSubject'){
+   populateExamChapters();
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('change',function(e){
+ if(e.target && (e.target.id==='examChapter' || e.target.id==='examTopic')){
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('click',function(e){
+ if(e.target && e.target.id==='btnSelectAllSubjects'){
+   const s=document.getElementById('examSubject');
+   if(s){
+      [...s.options].forEach(o=>o.selected=true);
+      populateExamChapters();
+      if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+   }
+ }
+});
+
+
+async function populateExamTopics(){
+ const chapter=document.getElementById('examChapter');
+ const topic=document.getElementById('examTopic');
+ if(!chapter || !topic) return;
+ const qs=await db.getAllQuestions();
+ let filtered=qs;
+ if(chapter.value!=='all'){
+   filtered=filtered.filter(q=>(q.chapter||'General')===chapter.value);
+ }
+ const topics=[...new Set(filtered.map(q=>q.topic).filter(Boolean))].sort();
+ topic.innerHTML='<option value="all">All</option>'+topics.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+
+async function updateExamCounters(){
+ const info=document.getElementById('availableQuestionsInfo');
+ if(!info) return;
+ const qs=await db.getAllQuestions();
+ info.innerHTML='Total Questions: '+qs.length;
+}
+
+document.addEventListener('change',async function(e){
+ if(e.target && e.target.id==='examChapter'){
+   await populateExamTopics();
+ }
+});
+
+document.addEventListener('DOMContentLoaded',function(){
+ setTimeout(()=>{
+   if(typeof populateExamChapters==='function') populateExamChapters();
+   if(typeof updateExamCounters==='function') updateExamCounters();
+ },500);
+});
+
+</script>
+
+<script>
+window.entStats = JSON.parse(localStorage.getItem('entStats')||'{"correct":0,"wrong":0,"highYield":0}');
+window.saveEntStats=function(){localStorage.setItem('entStats',JSON.stringify(window.entStats));};
+
+/* Delete one book handler */
+
+const delGroupBtn = document.getElementById('btnDeleteGroup');
+if(delGroupBtn){
+  delGroupBtn.addEventListener('click', async () => {
+    const groupName = (document.getElementById('deleteGroupName')?.value || '').trim();
+    if(!groupName){ alert('Enter book/group name'); return; }
+    if(!confirm(`Delete all questions from "${groupName}" only?`)) return;
+    const deleted = await db.deleteQuestionsByGroup(groupName);
+    showToast(`${deleted} questions deleted from ${groupName}`, 'success');
+    renderViewSafely('import');
+  });
+}
+
+
+async function populateDeleteBookDropdown(){
+ const sel=document.getElementById('deleteGroupName');
+ if(!sel) return;
+ const groups=await db.getAllGroups();
+ sel.innerHTML='<option value="">Select Book</option>'+groups.map(g=>`<option value="${g}">${g}</option>`).join('');
+}
+setTimeout(populateDeleteBookDropdown,300);
+
+
+document.addEventListener('click', async (e)=>{
+ if(e.target.id==='btnExamFromMistakes'){
+   const perf=await db.getPerformance();
+   const latest={}; perf.forEach(x=>latest[x.questionId]=x.correct);
+   const wrongIds=Object.keys(latest).filter(k=>latest[k]===false).map(Number);
+   const qs=(await db.getAllQuestions()).filter(q=>wrongIds.includes(q.id));
+   AppState._examSaved=false;
+   AppState.examQuestions=qs;
+   AppState.examAnswers={currentIndex:0};
+   AppState.examInProgress=true;
+   AppState.examStartTime=Date.now();
+   renderViewSafely('exam');
+ }
+ if(e.target.classList.contains('add-hy')){
+   await db.toggleHighYield(Number(e.target.dataset.qid));
+   showToast('Added to High Yield','success');
+   renderViewSafely('mistakes');
+ }
+ if(e.target.classList.contains('retry-question')){
+   const qid=Number(e.target.dataset.qid);
+   const q=await db.getQuestion(qid);
+   if(!q) return;
+   AppState.studyQuestions=[q];
+   AppState.studyIndex=0;
+   AppState.studyAnswers={};
+   AppState.studyRevealed={};
+   navigateTo('study');
+   setTimeout(()=>renderStudyQuestion(),100);
+ }
+});
+
+
+function updateAvailableQuestionsInfo(){
+ try{
+   const info=document.getElementById('availableQuestionsInfo');
+   if(!info || !window.db) return;
+   db.getAllQuestions().then(qs=>{
+      const subjSel=document.getElementById('examSubject');
+      const grpSel=document.getElementById('examGroup');
+      let filtered=[...qs];
+
+      const subjects=subjSel?[...subjSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+      const groups=grpSel?[...grpSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+
+      if(subjects.length) filtered=filtered.filter(q=>subjects.includes(q.subject));
+      if(groups.length) filtered=filtered.filter(q=>groups.includes(q.group));
+
+      info.textContent='Available Questions: '+filtered.length;
+   });
+ }catch(e){}
+}
+document.addEventListener('change',e=>{
+ if(e.target && (e.target.id==='examSubject' || e.target.id==='examGroup')){
+   updateAvailableQuestionsInfo();
+ }
+});
+
+
+function populateExamChapters(){
+ const subj=document.getElementById('examSubject');
+ const chap=document.getElementById('examChapter');
+ if(!subj||!chap) return;
+ const selected=[...subj.selectedOptions].map(o=>o.value).filter(v=>v!=='all');
+ let chapters=[];
+ if(selected.length===0){ chapters=ALL_CHAPTERS; }
+ else{
+   selected.forEach(s=>{ if(ENT_DATA[s]) chapters.push(...ENT_DATA[s]); });
+ }
+ chap.innerHTML='<option value="all">All</option>'+
+   [...new Set(chapters)].sort().map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+
+document.addEventListener('change',function(e){
+ if(e.target && e.target.id==='examSubject'){
+   populateExamChapters();
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('change',function(e){
+ if(e.target && (e.target.id==='examChapter' || e.target.id==='examTopic')){
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('click',function(e){
+ if(e.target && e.target.id==='btnSelectAllSubjects'){
+   const s=document.getElementById('examSubject');
+   if(s){
+      [...s.options].forEach(o=>o.selected=true);
+      populateExamChapters();
+      if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+   }
+ }
+});
+
+
+async function populateExamTopics(){
+ const chapter=document.getElementById('examChapter');
+ const topic=document.getElementById('examTopic');
+ if(!chapter || !topic) return;
+ const qs=await db.getAllQuestions();
+ let filtered=qs;
+ if(chapter.value!=='all'){
+   filtered=filtered.filter(q=>(q.chapter||'General')===chapter.value);
+ }
+ const topics=[...new Set(filtered.map(q=>q.topic).filter(Boolean))].sort();
+ topic.innerHTML='<option value="all">All</option>'+topics.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+
+async function updateExamCounters(){
+ const info=document.getElementById('availableQuestionsInfo');
+ if(!info) return;
+ const qs=await db.getAllQuestions();
+ info.innerHTML='Total Questions: '+qs.length;
+}
+
+document.addEventListener('change',async function(e){
+ if(e.target && e.target.id==='examChapter'){
+   await populateExamTopics();
+ }
+});
+
+document.addEventListener('DOMContentLoaded',function(){
+ setTimeout(()=>{
+   if(typeof populateExamChapters==='function') populateExamChapters();
+   if(typeof updateExamCounters==='function') updateExamCounters();
+ },500);
+});
+
+</script>
+
+</body>
+</html>
+
+<script>
+window.getSelectedExamGroups=function(){
+ const el=document.getElementById('examGroup');
+ if(!el) return ['all'];
+ return [...el.selectedOptions].map(x=>x.value);
+}
+
+function updateAvailableQuestionsInfo(){
+ try{
+   const info=document.getElementById('availableQuestionsInfo');
+   if(!info || !window.db) return;
+   db.getAllQuestions().then(qs=>{
+      const subjSel=document.getElementById('examSubject');
+      const grpSel=document.getElementById('examGroup');
+      let filtered=[...qs];
+
+      const subjects=subjSel?[...subjSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+      const groups=grpSel?[...grpSel.selectedOptions].map(x=>x.value).filter(v=>v!=='all'):[];
+
+      if(subjects.length) filtered=filtered.filter(q=>subjects.includes(q.subject));
+      if(groups.length) filtered=filtered.filter(q=>groups.includes(q.group));
+
+      info.textContent='Available Questions: '+filtered.length;
+   });
+ }catch(e){}
+}
+document.addEventListener('change',e=>{
+ if(e.target && (e.target.id==='examSubject' || e.target.id==='examGroup')){
+   updateAvailableQuestionsInfo();
+ }
+});
+
+
+function populateExamChapters(){
+ const subj=document.getElementById('examSubject');
+ const chap=document.getElementById('examChapter');
+ if(!subj||!chap) return;
+ const selected=[...subj.selectedOptions].map(o=>o.value).filter(v=>v!=='all');
+ let chapters=[];
+ if(selected.length===0){ chapters=ALL_CHAPTERS; }
+ else{
+   selected.forEach(s=>{ if(ENT_DATA[s]) chapters.push(...ENT_DATA[s]); });
+ }
+ chap.innerHTML='<option value="all">All</option>'+
+   [...new Set(chapters)].sort().map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+
+document.addEventListener('change',function(e){
+ if(e.target && e.target.id==='examSubject'){
+   populateExamChapters();
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('change',function(e){
+ if(e.target && (e.target.id==='examChapter' || e.target.id==='examTopic')){
+   if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+ }
+});
+
+document.addEventListener('click',function(e){
+ if(e.target && e.target.id==='btnSelectAllSubjects'){
+   const s=document.getElementById('examSubject');
+   if(s){
+      [...s.options].forEach(o=>o.selected=true);
+      populateExamChapters();
+      if(typeof updateAvailableQuestionsInfo==='function') updateAvailableQuestionsInfo();
+   }
+ }
+});
+
+
+async function populateExamTopics(){
+ const chapter=document.getElementById('examChapter');
+ const topic=document.getElementById('examTopic');
+ if(!chapter || !topic) return;
+ const qs=await db.getAllQuestions();
+ let filtered=qs;
+ if(chapter.value!=='all'){
+   filtered=filtered.filter(q=>(q.chapter||'General')===chapter.value);
+ }
+ const topics=[...new Set(filtered.map(q=>q.topic).filter(Boolean))].sort();
+ topic.innerHTML='<option value="all">All</option>'+topics.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+
+async function updateExamCounters(){
+ const info=document.getElementById('availableQuestionsInfo');
+ if(!info) return;
+ const qs=await db.getAllQuestions();
+ info.innerHTML='Total Questions: '+qs.length;
+}
+
+document.addEventListener('change',async function(e){
+ if(e.target && e.target.id==='examChapter'){
+   await populateExamTopics();
+ }
+});
+
+document.addEventListener('DOMContentLoaded',function(){
+ setTimeout(()=>{
+   if(typeof populateExamChapters==='function') populateExamChapters();
+   if(typeof updateExamCounters==='function') updateExamCounters();
+ },500);
+});
+
+</script>
+
+<script>
+window.entProVersion="vNext-Pro";
+
+async function scanDuplicateQuestions(){
+ const qs=await db.getAllQuestions();
+ const seen=new Map();
+ const dup=[];
+ qs.forEach(q=>{
+   const key=(q.questionText||'').replace(/\s+/g,' ').trim().toLowerCase();
+   if(seen.has(key)) dup.push(q);
+   else seen.set(key,true);
+ });
+ alert('Duplicate Questions Found: '+dup.length);
+ return dup.length;
+}
+
+document.addEventListener('click',async function(e){
+ if(e.target && e.target.id==='btnScanDuplicates'){
+   await scanDuplicateQuestions();
+ }
+});
+
+async function buildSubjectAnalytics(){
+ try{
+   const perf=await db.getPerformance();
+   const holder=document.getElementById('subjectAnalyticsContainer');
+   if(!holder) return;
+
+   const stats={};
+   perf.forEach(p=>{
+      const s=p.subject||'Unknown';
+      if(!stats[s]) stats[s]={t:0,c:0};
+      stats[s].t++;
+      if(p.correct) stats[s].c++;
+   });
+
+   const rows=Object.entries(stats)
+      .map(([s,v])=>({s,p:Math.round((v.c*100)/Math.max(v.t,1))}))
+      .sort((a,b)=>a.p-b.p);
+
+   holder.innerHTML=rows.length
+      ? rows.map(r=>`<div style="display:flex;justify-content:space-between;padding:6px 0"><span>${r.s}</span><span>${r.p}%</span></div>`).join('')
+      : 'No analytics yet';
+ }catch(e){}
+}
+
+document.addEventListener('DOMContentLoaded',()=>setTimeout(buildSubjectAnalytics,1000));
+</script>
+
+<script>
+// STEP 21 - Adaptive Learning Engine
+async function getWeakQuestionIds(){
+ const perf = await db.getPerformance();
+ const scoreMap = {};
+ perf.forEach(x=>{
+   const id=x.questionId;
+   if(!scoreMap[id]) scoreMap[id]={c:0,w:0};
+   x.correct ? scoreMap[id].c++ : scoreMap[id].w++;
+ });
+ return Object.entries(scoreMap)
+   .filter(([k,v])=>v.w > v.c)
+   .map(([k])=>Number(k));
+}
+
+window.startAdaptiveStudy = async function(){
+ const weakIds = await getWeakQuestionIds();
+ const all = await db.getAllQuestions();
+ const weakQuestions = all.filter(q=>weakIds.includes(q.id));
+
+ if(!weakQuestions.length){
+   alert("No weak questions found yet. Answer more questions first.");
+   return;
+ }
+
+ localStorage.setItem("adaptiveQuestions", JSON.stringify(weakQuestions));
+
+ AppState.studyQuestions = [...weakQuestions].sort(() => Math.random() - 0.5);
+ AppState.studyIndex = 0;
+ AppState.studyAnswers = {};
+ AppState.studyRevealed = {};
+
+ navigateTo('study');
+
+ setTimeout(() => {
+   if(typeof renderStudyQuestion === 'function'){
+      renderStudyQuestion();
+   }
+ }, 100);
+};
+</script>
+
+<script>
+document.addEventListener('click',function(e){
+ if(e.target && e.target.id==='btnAdaptiveStudy'){
+   startAdaptiveStudy();
+ }
+});
+</script>
+
+<!-- STEP 22 -->
+<script>
+window.startAdaptiveExam = async function(){
+ const weakIds = await getWeakQuestionIds();
+ const all = await db.getAllQuestions();
+ const weak = all.filter(q=>weakIds.includes(q.id));
+
+ if(!weak.length){
+   alert("No weak questions found yet. Answer more questions first.");
+   return;
+ }
+
+ AppState.examQuestions = [...weak].sort(()=>Math.random()-0.5);
+ AppState.examAnswers = {currentIndex:0};
+ AppState.examInProgress = true;
+ AppState.examShowResults = false;
+ AppState._examSaved = false;
+ AppState.examStartTime = Date.now();
+ AppState.examTimeRemaining = 0;
+
+ navigateTo('exam');
+};
+
+window.showSubjectAnalytics = async function(){
+ if(!window.db || !db.getPerformance) return;
+ const perf = await db.getPerformance();
+ const map = {};
+ perf.forEach(x=>{
+   const s = x.subject || "Unknown";
+   if(!map[s]) map[s] = {t:0,c:0};
+   map[s].t++;
+   if(x.correct) map[s].c++;
+ });
+ const el = document.getElementById("subjectAnalyticsContainer");
+ if(!el) return;
+ el.innerHTML = Object.entries(map)
+   .map(([s,v])=>{
+      const p = Math.round((v.c*100)/v.t);
+      return `<div style="display:flex;justify-content:space-between;padding:6px 0">
+      <span>${s}</span><span>${p}%</span></div>`;
+   }).join("") || "No analytics yet.";
+};
+
+document.addEventListener("DOMContentLoaded",()=>{
+ setTimeout(showSubjectAnalytics,1500);
+});
+
+document.addEventListener('click',function(e){
+ if(e.target.classList.contains('book-card')){
+   e.target.classList.toggle('selected');
+ }
+});
+</script>
